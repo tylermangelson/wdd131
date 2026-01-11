@@ -1,16 +1,17 @@
 body {
-    margin: 100px;
+    margin: 100px auto;
     padding: 75px;
     text-align: left;
     border: solid black;
     border-width: 1px;
+    width: 500px;
 }
 
-div {
+.title {
     text-align: center;
 }
 
-div p {
+.title p {
    color: #3569a9; 
 }
 
