@@ -1,0 +1,24 @@
+body {
+    margin: 100px;
+    padding: 75px;
+    text-align: left;
+    border: solid black;
+    border-width: 1px;
+}
+
+div {
+    text-align: center;
+}
+
+div p {
+   color: #3569a9; 
+}
+
+ol {
+    text-align: left;
+}
+
+img {
+    display: block;
+    margin: 0 auto;
+}
