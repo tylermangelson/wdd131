@@ -1,9 +1,10 @@
 body {
-    text-align: center;  
-    margin: 60px;
-    padding: 30px;
-    background-color: rgb(170, 170, 170);
-    border: 1px solid rgb(74, 74, 74);
+    margin: 100px auto;
+    padding: 75px;
+    text-align: left;
+    border: solid black;
+    border-width: 1px;
+    width: 500px;
 }
 
 #content {
@@ -25,6 +26,11 @@ hr {
 
 p {
   color: rgb(0, 110, 255);   
+}
+
+.highlight {
+    background-color: yellow;
+    padding: 5px;
 }
 
 
