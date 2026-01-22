@@ -4,8 +4,6 @@ body {
     font-family: Roboto, sans-serif;
 }
 
-
-
 header,
 main,
 footer {
@@ -31,6 +29,12 @@ nav a {
     padding: 20px;
     color: black;
     display: none;
+    
+}
+
+nav.active a {
+    display: block;
+    text-align: center;
 }
 
 nav a:hover {
@@ -54,12 +58,17 @@ nav a:hover {
 }
 
 footer {
-    text-align: center;
+    text-align: left;
 }
 
 @media screen and (min-width: 700px) {
     nav a {
         display: inline;
+        text-align: right;
+    }
+
+    nav {
+        text-align: right;
     }
 
     .menu-btn {
@@ -67,26 +76,24 @@ footer {
     }
 
     main {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
     }
 
-    section {
-        width: calc(50% - 1.5em);
-        margin: 0.5em;
-    }
 }
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 1024px) {
     main {
-        max-width: 1200px;
-        display: flex;
-        flex-wrap: nowrap;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
     }
 
-    section {
-        width: calc(33.333% - 1.5em);
-        margin: 0.5em;
+    nav a{
+    text-align: right;
+    }
+
+    nav {
+        text-align: right;
     }
 }
