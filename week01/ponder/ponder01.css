@@ -1,0 +1,38 @@
+body {
+    margin: 100px auto;
+    padding: 75px;
+    text-align: left;
+    border: solid black;
+    border-width: 1px;
+    width: 500px;
+}
+
+#content {
+    text-align: center;
+}
+
+ul.list {
+    text-align: left;
+    display: inline-block;
+    width: 350px;
+    list-style: none;
+}
+
+hr {
+    border: none;             
+    height: 3px;            
+    background-color: rgb(0, 110, 255);    
+}
+
+p {
+  color: rgb(0, 110, 255);   
+}
+
+.highlight {
+    background-color: yellow;
+    padding: 5px;
+}
+
+
+
+

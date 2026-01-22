@@ -1,0 +1,25 @@
+body {
+    margin: 100px auto;
+    padding: 75px;
+    text-align: left;
+    border: solid black;
+    border-width: 1px;
+    width: 600px;
+}
+
+.title {
+    text-align: center;
+}
+
+.title p {
+   color: #3569a9; 
+}
+
+ol {
+    text-align: left;
+}
+
+img {
+    display: block;
+    margin: 0 auto;
+}
