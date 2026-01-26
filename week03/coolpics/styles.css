@@ -1,0 +1,99 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+body {
+    font-family: Roboto, sans-serif;
+    margin: 0;
+}
+
+header,
+footer {
+    background-color: #2C81E2;
+    padding: 1rem;
+    text-align: center;
+    color: white;
+}
+
+.menu-btn {
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    color: white;
+}
+
+nav {
+    display: none;
+    margin-top: 1rem;
+}
+
+/* Mobile (defualt) */
+
+nav.active {
+    display: block;
+}
+
+nav a {
+    display: block;
+    padding: 0.5rem;
+    color: white;
+    text-decoration: none;
+}
+
+main {
+    background-color: #CCCCCC;
+    padding: 1rem;
+    color: black;
+}
+
+.gallery {
+    display: grid;
+    /* grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); */
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 2rem;
+}
+
+.image-card {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border: 5px solid white;
+    box-shadow: 5px 5px 10px
+
+}
+
+.image-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+section {
+    text-align: center;
+}
+
+@media screen and (min-width: 700px) {
+    .gallery {
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .gallery {
+        grid-template-columns: 1fr 1fr 1fr;
+        margin-left: 20%;
+        margin-right: 20%;
+    }
+
+    nav {
+        display: block;
+    }
+
+    nav a {
+        display: inline;
+    }
+
+    .menu-btn {
+        display: none;
+    }
+}
