@@ -7,6 +7,6 @@ toggleButton.addEventListener('click', () => {
 
 window.addEventListener('resize', () => {
     if (window.innerWidth >= 700) {
-        navigator.classList.remove('active')
+        nav.classList.remove('active')
     }
 });
