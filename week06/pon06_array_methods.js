@@ -1,4 +1,3 @@
- 
 function convert(grade) {
     switch (grade){
         case 'A':
@@ -29,5 +28,13 @@ const students = [
     {last: 'Masa', first:'Manny'},
     {last: 'Tanda', first: 'Tamanda'}
 ];
-          
-          
+
+words.slice(0, 3).forEach(word => {
+    document.getElementById('wordList').innerHTML += `<li>${word}</li>`;
+    console.log(word);
+});
+
+students.forEach(student => {
+    document.getElementById('studentList').innerHTML += `<p>${student.first} ${student.last}</p>`;
+    console.log(`${student.first} ${student.last}`);
+});
