@@ -1,0 +1,20 @@
+// Variables:
+
+    // var
+        // // Made for old browsers. Don't use much anymore.
+
+    // let
+        // // Use for values that change
+
+    // const
+        // Const cannot be changed. Always use const unless you need to be able to change the value
+
+// Identifiers
+
+    // Naming rule:
+        // Can contain letters, numbers, and symbols
+        // Must start with a letter, "$", or "_"
+        // Cannot be reserved words like "let" or "const"
+        // Case senstaive
+
+
