@@ -1,0 +1,2354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript Foundations — A Beginner's Textbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,900;1,300;1,600&family=DM+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a1410;
+  --paper: #faf7f2;
+  --cream: #f3ede3;
+  --amber: #d4820a;
+  --amber-light: #f5c842;
+  --amber-pale: #fef3d0;
+  --rust: #c4411a;
+  --forest: #2a6b4a;
+  --slate: #4a5568;
+  --muted: #8a8070;
+  --border: #ddd5c5;
+  --code-bg: #1e1a16;
+  --code-text: #e8dcc8;
+  --sidebar-w: 280px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* ─── SIDEBAR ─── */
+#sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: var(--sidebar-w);
+  height: 100vh;
+  background: var(--ink);
+  color: var(--paper);
+  overflow-y: auto;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+}
+
+#sidebar::-webkit-scrollbar { width: 4px; }
+#sidebar::-webkit-scrollbar-track { background: transparent; }
+#sidebar::-webkit-scrollbar-thumb { background: #3a3028; border-radius: 2px; }
+
+.sidebar-header {
+  padding: 28px 24px 20px;
+  border-bottom: 1px solid #3a3028;
+}
+
+.sidebar-header .book-title {
+  font-family: 'Fraunces', serif;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--amber-light);
+  letter-spacing: -0.01em;
+}
+
+.sidebar-header .book-sub {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 4px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.sidebar-nav { padding: 16px 0; flex: 1; }
+
+.nav-unit-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #5a5040;
+  padding: 14px 24px 6px;
+}
+
+.nav-unit-label:first-child { padding-top: 6px; }
+
+.nav-link {
+  display: block;
+  padding: 7px 24px;
+  font-size: 13.5px;
+  color: #b8a890;
+  text-decoration: none;
+  transition: all 0.15s;
+  border-left: 3px solid transparent;
+  line-height: 1.4;
+}
+
+.nav-link:hover {
+  color: var(--paper);
+  background: #2a2520;
+  border-left-color: #5a5040;
+}
+
+.nav-link.active {
+  color: var(--amber-light);
+  background: #2a2520;
+  border-left-color: var(--amber);
+}
+
+.nav-section {
+  display: block;
+  padding: 4px 24px 4px 34px;
+  font-size: 12px;
+  color: #6a6050;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.nav-section:hover { color: #9a8a78; }
+
+/* ─── MAIN CONTENT ─── */
+#main {
+  margin-left: var(--sidebar-w);
+  min-height: 100vh;
+}
+
+/* ─── HERO ─── */
+.hero {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 80px 80px 72px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(212,130,10,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero::after {
+  content: 'JS';
+  position: absolute;
+  bottom: -40px; right: 60px;
+  font-family: 'Fraunces', serif;
+  font-size: 220px;
+  font-weight: 900;
+  color: rgba(255,255,255,0.03);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.hero h1 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+  max-width: 700px;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--amber-light);
+}
+
+.hero-desc {
+  font-size: 17px;
+  color: #b8a890;
+  max-width: 560px;
+  line-height: 1.65;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 40px;
+  margin-top: 48px;
+  flex-wrap: wrap;
+}
+
+.stat { }
+
+.stat-num {
+  font-family: 'Fraunces', serif;
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--amber-light);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #6a6050;
+  margin-top: 4px;
+  letter-spacing: 0.04em;
+}
+
+/* ─── CONTENT SECTIONS ─── */
+.content-area {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 60px 60px;
+}
+
+/* ─── UNIT HEADER ─── */
+.unit-header {
+  background: var(--cream);
+  border-bottom: 1px solid var(--border);
+  padding: 48px 60px 40px;
+  margin-left: 0;
+}
+
+.unit-number {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 10px;
+}
+
+.unit-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--ink);
+  max-width: 700px;
+}
+
+.unit-goal {
+  font-size: 15px;
+  color: var(--slate);
+  margin-top: 16px;
+  max-width: 620px;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* ─── SECTION ─── */
+.section {
+  padding: 56px 60px 20px;
+  max-width: 820px;
+}
+
+.section + .section {
+  border-top: 1px solid var(--border);
+}
+
+.section-id {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.section h2 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--ink);
+  margin-bottom: 20px;
+}
+
+.section h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 32px 0 12px;
+  letter-spacing: -0.01em;
+}
+
+.section p {
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: #2a2010;
+  margin-bottom: 16px;
+  max-width: 680px;
+}
+
+.section strong { color: var(--ink); font-weight: 600; }
+
+/* ─── MENTAL MODEL BOX ─── */
+.mental-model {
+  background: var(--amber-pale);
+  border: 1px solid #e8c87a;
+  border-left: 4px solid var(--amber);
+  border-radius: 6px;
+  padding: 18px 20px;
+  margin: 24px 0;
+  max-width: 680px;
+}
+
+.mental-model-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 6px;
+}
+
+.mental-model p {
+  font-size: 14.5px;
+  margin-bottom: 0;
+  color: #5a3a08;
+  font-style: italic;
+}
+
+/* ─── CODE BLOCKS ─── */
+.code-block {
+  background: var(--code-bg);
+  border-radius: 8px;
+  margin: 20px 0;
+  overflow: hidden;
+  max-width: 680px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+}
+
+.code-label {
+  background: #2a2520;
+  padding: 8px 16px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6a6050;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.code-label::before {
+  content: '';
+  width: 8px; height: 8px;
+  background: var(--amber);
+  border-radius: 50%;
+}
+
+.code-block pre {
+  padding: 20px 20px;
+  overflow-x: auto;
+  font-family: 'DM Mono', monospace;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--code-text);
+}
+
+.code-block pre::-webkit-scrollbar { height: 4px; }
+.code-block pre::-webkit-scrollbar-track { background: transparent; }
+.code-block pre::-webkit-scrollbar-thumb { background: #3a3028; }
+
+/* Syntax highlighting */
+.kw { color: #c792ea; }
+.fn { color: #82aaff; }
+.str { color: #c3e88d; }
+.num { color: #f78c6c; }
+.cmt { color: #546e7a; font-style: italic; }
+.bool { color: #ff9cac; }
+.op { color: #89ddff; }
+.var-name { color: #eeffff; }
+.method { color: #f07178; }
+
+/* ─── INLINE CODE ─── */
+code {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  background: #ede8e0;
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: var(--rust);
+}
+
+/* ─── PITFALL BOX ─── */
+.pitfall {
+  background: #fff5f5;
+  border: 1px solid #fcc;
+  border-left: 4px solid var(--rust);
+  border-radius: 6px;
+  padding: 18px 20px;
+  margin: 20px 0;
+  max-width: 680px;
+}
+
+.pitfall-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--rust);
+  margin-bottom: 8px;
+}
+
+.pitfall p {
+  font-size: 14.5px;
+  margin-bottom: 8px;
+  color: #5a1a0a;
+}
+.pitfall p:last-child { margin-bottom: 0; }
+
+/* ─── REFLECTION BOX ─── */
+.reflections {
+  background: #f0f4f0;
+  border: 1px solid #c4d4c0;
+  border-radius: 8px;
+  padding: 24px 24px 20px;
+  margin: 32px 0;
+  max-width: 680px;
+}
+
+.reflections-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--forest);
+  margin-bottom: 14px;
+}
+
+.reflections ol {
+  padding-left: 20px;
+}
+
+.reflections li {
+  font-size: 14.5px;
+  color: #1a3a2a;
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+.reflections li:last-child { margin-bottom: 0; }
+
+/* ─── ASSIGNMENT BOX ─── */
+.assignment {
+  background: #f8f4ff;
+  border: 1px solid #d0b8f0;
+  border-left: 4px solid #7c3aed;
+  border-radius: 6px;
+  padding: 20px 22px;
+  margin: 28px 0;
+  max-width: 680px;
+}
+
+.assignment-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #7c3aed;
+  margin-bottom: 8px;
+}
+
+.assignment h4 {
+  font-family: 'Fraunces', serif;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #2d1858;
+}
+
+.assignment p {
+  font-size: 14.5px;
+  color: #2d1858;
+  margin-bottom: 0;
+}
+
+/* ─── TABLE ─── */
+.table-wrap {
+  overflow-x: auto;
+  margin: 20px 0;
+  max-width: 680px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 14px;
+}
+
+th {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--ink);
+}
+
+tr:last-child td { border-bottom: none; }
+tr:nth-child(even) td { background: var(--cream); }
+
+td code { font-size: 12.5px; }
+
+/* ─── UNIT SYNTHESIS ─── */
+.synthesis {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 40px 48px;
+  margin: 48px 0 0;
+  border-radius: 8px;
+  max-width: 680px;
+}
+
+.synthesis-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 12px;
+}
+
+.synthesis p {
+  font-size: 15px;
+  color: #c8b898;
+  line-height: 1.7;
+  margin-bottom: 0;
+  max-width: 100%;
+}
+
+/* ─── MOBILE TOGGLE ─── */
+#menu-toggle {
+  display: none;
+  position: fixed;
+  top: 16px; left: 16px;
+  z-index: 200;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  border-radius: 6px;
+  width: 40px; height: 40px;
+  cursor: pointer;
+  font-size: 18px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── PROGRESS BAR ─── */
+#progress-bar {
+  position: fixed;
+  top: 0; left: var(--sidebar-w);
+  height: 3px;
+  background: var(--amber);
+  width: 0%;
+  z-index: 99;
+  transition: width 0.1s;
+}
+
+/* ─── DIVIDER ─── */
+.unit-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0 60px;
+}
+
+/* ─── BACK TO TOP ─── */
+.back-to-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 48px 60px 60px;
+  transition: color 0.15s;
+}
+
+.back-to-top:hover { color: var(--amber); }
+
+/* ─── INTRO SECTION ─── */
+.intro-section {
+  padding: 52px 60px 40px;
+  max-width: 820px;
+  border-bottom: 1px solid var(--border);
+}
+
+.intro-section h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--ink);
+}
+
+.intro-section p {
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: #2a2010;
+  margin-bottom: 14px;
+  max-width: 660px;
+}
+
+.unit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 28px;
+  max-width: 680px;
+}
+
+.unit-card {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 18px;
+  text-decoration: none;
+  color: var(--ink);
+  transition: all 0.15s;
+}
+
+.unit-card:hover {
+  border-color: var(--amber);
+  background: var(--amber-pale);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.unit-card-num {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 4px;
+}
+
+.unit-card-title {
+  font-family: 'Fraunces', serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+@media (max-width: 900px) {
+  #sidebar {
+    transform: translateX(-100%);
+  }
+  #sidebar.open {
+    transform: translateX(0);
+  }
+  #main {
+    margin-left: 0;
+  }
+  #progress-bar {
+    left: 0;
+  }
+  #menu-toggle {
+    display: flex;
+  }
+  .hero, .unit-header, .section, .intro-section, .back-to-top, .unit-divider {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .content-area { padding: 40px 24px; }
+}
+
+/* Animation */
+.section, .unit-header {
+  animation: fadeUp 0.5s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+<button id="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-header">
+    <div class="book-title">JavaScript Foundations</div>
+    <div class="book-sub">A Beginner's Textbook</div>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-unit-label">Start Here</div>
+    <a href="#home" class="nav-link">Introduction</a>
+
+    <div class="nav-unit-label">Unit 1 — Variables</div>
+    <a href="#unit1" class="nav-link">1.1 What Is a Variable?</a>
+    <a href="#unit1-2" class="nav-link">1.2 Constants</a>
+    <a href="#unit1-3" class="nav-link">1.3 Data Types</a>
+
+    <div class="nav-unit-label">Unit 2 — Conditionals</div>
+    <a href="#unit2" class="nav-link">2.1 If / Else</a>
+    <a href="#unit2-2" class="nav-link">2.2 Logical Operators</a>
+    <a href="#unit2-3" class="nav-link">2.3 Switch & Ternary</a>
+
+    <div class="nav-unit-label">Unit 3 — Functions</div>
+    <a href="#unit3" class="nav-link">3.1 Defining Functions</a>
+    <a href="#unit3-2" class="nav-link">3.2 Scope</a>
+    <a href="#unit3-3" class="nav-link">3.3 Arrow Functions</a>
+
+    <div class="nav-unit-label">Unit 4 — Arrays</div>
+    <a href="#unit4" class="nav-link">4.1 Creating Arrays</a>
+    <a href="#unit4-2" class="nav-link">4.2 Iterating Arrays</a>
+    <a href="#unit4-3" class="nav-link">4.3 Searching & Sorting</a>
+
+    <div class="nav-unit-label">Unit 5 — Objects</div>
+    <a href="#unit5" class="nav-link">5.1 Creating Objects</a>
+    <a href="#unit5-2" class="nav-link">5.2 Methods & This</a>
+    <a href="#unit5-3" class="nav-link">5.3 Nested Objects</a>
+
+    <div class="nav-unit-label">Unit 6 — Events</div>
+    <a href="#unit6" class="nav-link">6.1 How Events Work</a>
+    <a href="#unit6-2" class="nav-link">6.2 Keyboard & Forms</a>
+    <a href="#unit6-3" class="nav-link">6.3 Event Delegation</a>
+
+    <div class="nav-unit-label">Unit 7 — The DOM</div>
+    <a href="#unit7" class="nav-link">7.1 Understanding the DOM</a>
+    <a href="#unit7-2" class="nav-link">7.2 Modifying Elements</a>
+    <a href="#unit7-3" class="nav-link">7.3 DOM + Events</a>
+
+    <div class="nav-unit-label">Unit 8 — Sorting</div>
+    <a href="#unit8" class="nav-link">8.1 Bubble Sort</a>
+    <a href="#unit8-2" class="nav-link">8.2 Selection & Insertion</a>
+    <a href="#unit8-3" class="nav-link">8.3 Merge Sort</a>
+
+    <div class="nav-unit-label">Reference</div>
+    <a href="#appendix" class="nav-link">Appendices A–D</a>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main id="main">
+
+<!-- HERO -->
+<div id="home" class="hero">
+  <div class="hero-eyebrow">Complete Beginner's Course</div>
+  <h1>Learn <em>JavaScript</em> from the Very Beginning</h1>
+  <p class="hero-desc">Eight units. No experience required. Real code, real explanations, and projects you'll actually understand why you're building.</p>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">8</div>
+      <div class="stat-label">Units</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">24</div>
+      <div class="stat-label">Sections</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">24</div>
+      <div class="stat-label">Projects</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">0</div>
+      <div class="stat-label">Prerequisites</div>
+    </div>
+  </div>
+</div>
+
+<!-- INTRO -->
+<div class="intro-section">
+  <h2>How to Use This Textbook</h2>
+  <p>You don't need to know anything about programming to start. Each unit builds on the one before it — start at Unit 1 and work through in order. Every section has three parts: a plain-English explanation of the concept, code examples you can study and run yourself, and a hands-on project that makes the ideas stick.</p>
+  <p>When you see a 🧠 <strong>Mental Model</strong> box, that's an analogy to help the idea click. When you see a ⚠️ <strong>Pitfall</strong> box, that's something that trips up beginners — read it carefully. Every section ends with 💬 <strong>Reflection Questions</strong> to check your own understanding.</p>
+  <p>You'll need a browser (you already have one) and a free code editor. <strong>VS Code</strong> is recommended. Open any <code>.js</code> file, right-click, and open it with a browser — or use your browser's built-in DevTools console (press F12).</p>
+
+  <div class="unit-grid">
+    <a href="#unit1" class="unit-card"><div class="unit-card-num">Unit 1</div><div class="unit-card-title">Variables & Constants</div></a>
+    <a href="#unit2" class="unit-card"><div class="unit-card-num">Unit 2</div><div class="unit-card-title">Conditionals</div></a>
+    <a href="#unit3" class="unit-card"><div class="unit-card-num">Unit 3</div><div class="unit-card-title">Functions</div></a>
+    <a href="#unit4" class="unit-card"><div class="unit-card-num">Unit 4</div><div class="unit-card-title">Arrays</div></a>
+    <a href="#unit5" class="unit-card"><div class="unit-card-num">Unit 5</div><div class="unit-card-title">Objects</div></a>
+    <a href="#unit6" class="unit-card"><div class="unit-card-num">Unit 6</div><div class="unit-card-title">Events</div></a>
+    <a href="#unit7" class="unit-card"><div class="unit-card-num">Unit 7</div><div class="unit-card-title">The DOM</div></a>
+    <a href="#unit8" class="unit-card"><div class="unit-card-num">Unit 8</div><div class="unit-card-title">Sorting Algorithms</div></a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ UNIT 1 ═══ -->
+<div id="unit1">
+  <div class="unit-header">
+    <div class="unit-number">Unit 1</div>
+    <div class="unit-title">Variables & Constants</div>
+    <div class="unit-goal">By the end of this unit, you'll understand how programs store and manage information — and why naming things well is one of the most important habits you can build as a programmer.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-id">Section 1.1</div>
+    <h2>What Is a Variable?</h2>
+
+    <p>A <strong>variable</strong> is a named container that holds a value. Think of it like a labeled box: the label is the name, and whatever's inside is the value. The cool thing about variables is that the contents can change while the label stays the same.</p>
+
+    <p>This is how programs remember things. A shopping cart needs to track a running total. A game needs to remember the player's score. A weather app needs the current temperature. Without variables, a program can't hold onto any information — it would forget everything the instant it was created.</p>
+
+    <div class="mental-model">
+      <div class="mental-model-label">🧠 Mental Model</div>
+      <p>Think of a whiteboard in a classroom. You can write something on it, erase it, and write something new. The whiteboard is always "the whiteboard," but its contents change. A variable works the same way.</p>
+    </div>
+
+    <h3>Creating and Using Variables</h3>
+
+    <p>In JavaScript, you create a variable using the keyword <code>let</code>, followed by a name you choose, an equals sign, and a value.</p>
+
+    <div class="code-block">
+      <div class="code-label">Basic Variable</div>
+      <pre><span class="kw">let</span> <span class="var-name">score</span> <span class="op">=</span> <span class="num">0</span>;
+<span class="fn">console</span>.<span class="method">log</span>(score); <span class="cmt">// 0</span>
+
+score <span class="op">=</span> <span class="num">10</span>; <span class="cmt">// update the value</span>
+<span class="fn">console</span>.<span class="method">log</span>(score); <span class="cmt">// 10</span></pre>
+    </div>
+
+    <p>Read this as: "Create a variable named <code>score</code>. Give it the value <code>0</code>. Later, change that value to <code>10</code>." The equals sign here is not asking a question — it's giving an instruction: "put this value in this box."</p>
+
+    <h3>Variables Can Hold Different Kinds of Data</h3>
+
+    <div class="code-block">
+      <div class="code-label">Different Data Types</div>
+      <pre><span class="kw">let</span> <span class="var-name">playerName</span>    <span class="op">=</span> <span class="str">"Amara"</span>;      <span class="cmt">// text (called a "string")</span>
+<span class="kw">let</span> <span class="var-name">level</span>          <span class="op">=</span> <span class="num">5</span>;           <span class="cmt">// whole number</span>
+<span class="kw">let</span> <span class="var-name">healthPercent</span>  <span class="op">=</span> <span class="num">87.5</span>;        <span class="cmt">// decimal number</span>
+<span class="kw">let</span> <span class="var-name">isAlive</span>        <span class="op">=</span> <span class="bool">true</span>;         <span class="cmt">// true or false (boolean)</span></pre>
+    </div>
+
+    <h3>Variables Change Over Time</h3>
+
+    <div class="code-block">
+      <div class="code-label">Watching a Variable Change</div>
+      <pre><span class="kw">let</span> <span class="var-name">temperature</span> <span class="op">=</span> <span class="num">68</span>;
+<span class="fn">console</span>.<span class="method">log</span>(<span class="str">"Morning temp:"</span>, temperature);  <span class="cmt">// 68</span>
+
+temperature <span class="op">=</span> <span class="num">74</span>;
+<span class="fn">console</span>.<span class="method">log</span>(<span class="str">"Afternoon temp:"</span>, temperature); <span class="cmt">// 74</span>
+
+temperature <span class="op">=</span> temperature <span class="op">+</span> <span class="num">3</span>;
+<span class="fn">console</span>.<span class="method">log</span>(<span class="str">"Evening temp:"</span>, temperature);   <span class="cmt">// 77</span></pre>
+    </div>
+
+    <p>Notice <code>temperature = temperature + 3</code> — the right side is calculated first using the <em>old</em> value (74), then the result (77) is stored back into the variable. This is a pattern you'll use constantly.</p>
+
+    <div class="assignment">
+      <div class="assignment-label">📝 Project: Personal Profile Card</div>
+      <h4>Console Profile Card</h4>
+      <p>Create a program that stores information about a person — name, age, city, favorite hobby, and one fun fact — then prints a formatted "profile card" to the console. Update at least two values and print a second version showing the changes. Focus on making the output look polished and readable.</p>
+    </div>
+
+    <div class="pitfall">
+      <div class="pitfall-label">⚠️ Common Pitfalls</div>
+      <p><strong>Using a variable before creating it</strong> — JavaScript doesn't know about a variable until the line where you declare it. Using it before that line will crash your program.</p>
+      <p><strong>Confusing <code>=</code> with <code>==</code></strong> — A single <code>=</code> is an instruction: "store this value." It's not asking a question. <code>==</code> is a comparison that asks "are these equal?" We'll cover comparisons in Unit 2.</p>
+      <p><strong>Variable names are case-sensitive</strong> — <code>userName</code> and <code>username</code> are two completely different variables in JavaScript.</p>
+      <p><strong>Vague names cause bugs</strong> — A variable named <code>x</code> or <code>data</code> tells you nothing. Name variables clearly: <code>currentUserName</code>, <code>orderTotal</code>, <code>isLoggedIn</code>. Use <code>camelCase</code> — start lowercase, capitalize each new word.</p>
+    </div>
+
+    <div class="reflections">
+      <div class="reflections-label">💬 Reflection Questions</div>
+      <ol>
+        <li>In your own words, what is a variable? Try to explain it without using the word "variable."</li>
+        <li>Why does naming variables clearly matter? Can you think of a situation where a vague name could cause real problems?</li>
+        <li>What would a program be like if it couldn't store any values at all?</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 1.2 -->
+  <div id="unit1-2" class="section">
+    <div class="section-id">Section 1.2</div>
+    <h2>Constants — Values That Should Never Change</h2>
+
+    <p>A <strong>constant</strong> is like a variable that makes a promise: once a value is set, it will never change. In JavaScript, you create constants with <code>const</code> instead of <code>let</code>.</p>
+
+    <p>Why would you <em>want</em> something that can't change? Because many values in a program genuinely shouldn't change. Using <code>const</code> makes your intention explicit — it tells anyone reading your code: "This value is fixed. Don't touch it."</p>
+
+    <div class="mental-model">
+      <div class="mental-model-label">🧠 Mental Model</div>
+      <p>A <code>const</code> is like a permanent marker versus a regular pencil. A <code>let</code> variable is pencil — writable and erasable. A <code>const</code> is permanent marker — once written, it stays.</p>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">Using const</div>
+      <pre><span class="kw">const</span> <span class="var-name">SECONDS_IN_A_MINUTE</span> <span class="op">=</span> <span class="num">60</span>;
+<span class="kw">const</span> <span class="var-name">MAX_USERNAME_LENGTH</span> <span class="op">=</span> <span class="num">20</span>;
+<span class="kw">const</span> <span class="var-name">SITE_NAME</span> <span class="op">=</span> <span class="str">"LearnCode"</span>;</pre>
+    </div>
+
+    <p>Many developers write constant names in ALL_CAPS to make it visually obvious they're fixed values. This isn't required, but it's a helpful signal.</p>
+
+    <div class="code-block">
+      <div class="code-label">What Happens When You Try to Change a Constant</div>
+      <pre><span class="kw">const</span> <span class="var-name">taxRate</span> <span class="op">=</span> <span class="num">0.08</span>;
+taxRate <span class="op">=</span> <span class="num">0.09</span>; <span class="cmt">// TypeError: Assignment to constant variable</span></pre>
+    </div>
+
+    <p>JavaScript throws an error — and that's actually a <em>good</em> thing. It protects you from accidentally overwriting a value that should stay fixed.</p>
+
+    <div class="code-block">
+      <div class="code-label">Choosing Between let and const</div>
+      <pre><span class="kw">const</span> <span class="var-name">MAX_SCORE</span> <span class="op">=</span> <span class="num">100</span>;     <span class="cmt">// never changes → const</span>
+<span class="kw">let</span>   <span class="var-name">currentScore</span> <span class="op">=</span> <span class="num">0</span>;    <span class="cmt">// changes as you play → let</span>
+<span class="kw">let</span>   <span class="var-name">playerName</span> <span class="op">=</span> <span class="str">"Priya"</span>; <span class="cmt">// could be updated → let</span>
+
+currentScore <span class="op">=</span> currentScore <span class="op">+</span> <span class="num">10</span>;
+<span class="fn">console</span>.<span class="method">log</span>(<span class="str">`</span><span class="op">${</span>playerName<span class="op">}</span><span class="str"> scored </span><span class="op">${</span>currentScore<span class="op">}</span><span class="str"> out of </span><span class="op">${</span>MAX_SCORE<span class="op">}</span><span class="str">`</span>);</pre>
+    </div>
+
+    <p>The backtick syntax above (called a <strong>template literal</strong>) lets you embed variable values directly inside a string using <code>${}</code>. This is usually cleaner than joining strings with <code>+</code>.</p>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Feature</th><th>let</th><th>const</th></tr>
+        <tr><td>Can be reassigned?</td><td>Yes</td><td>No</td></tr>
+        <tr><td>Must have a value immediately?</td><td>No</td><td>Yes</td></tr>
+        <tr><td>Use when...</td><td>Value will change</td><td>Value is fixed</td></tr>
+      </table>
+    </div>
+
+    <div class="assignment">
+      <div class="assignment-label">📝 Project: Receipt Generator</div>
+      <h4>Store Receipt</h4>
+      <p>Build a console program that simulates a store receipt. Define at least three constants (tax rate, store name, discount percentage) and at least three variables (item names, quantities, prices). Calculate a subtotal, apply tax, and print a formatted receipt. Then update one item and reprint — your constants should stay unchanged throughout.</p>
+    </div>
+
+    <div class="pitfall">
+      <div class="pitfall-label">⚠️ Common Pitfalls</div>
+      <p><strong>You must give <code>const</code> a value immediately</strong> — <code>const rate;</code> is a syntax error. You have to write <code>const rate = 0.05;</code> on the same line.</p>
+      <p><strong>When in doubt, use <code>let</code></strong> — If a value will change, use <code>let</code>. If it won't, use <code>const</code>. When you're just learning, <code>let</code> is always safe.</p>
+      <p><strong>Avoid <code>var</code></strong> — You'll see it in older code. It works differently from <code>let</code> and <code>const</code> in ways that cause subtle bugs. Modern JavaScript uses <code>let</code> and <code>const</code>.</p>
+    </div>
+
+    <div class="reflections">
+      <div class="reflections-label">💬 Reflection Questions</div>
+      <ol>
+        <li>Can you think of three values in a real app that should be constants? Why shouldn't those values change?</li>
+        <li>What's the practical benefit of using <code>const</code>? How does it help a human reading your code?</li>
+        <li>If someone told you "just use <code>let</code> for everything, it's simpler," how would you respond?</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 1.3 -->
+  <div id="unit1-3" class="section">
+    <div class="section-id">Section 1.3</div>
+    <h2>Data Types — What Kind of Value Is It?</h2>
+
+    <p>Every value in JavaScript has a <strong>type</strong> — a category that describes what kind of data it is and what you can do with it. Understanding types matters because the same operation can behave very differently depending on what type of data you're working with.</p>
+
+    <p>Adding two numbers gives you math. "Adding" two strings joins them together. Adding a number and a string gives you something unexpected — and this leads to the concept of <strong>type coercion</strong>: JavaScript's tendency to automatically convert types in ways that aren't always what you expect.</p>
+
+    <div class="mental-model">
+      <div class="mental-model-label">🧠 Mental Model</div>
+      <p>Types are like units of measurement. "5 meters + 3 meters = 8 meters" makes sense. But "5 meters + 3 kilograms" is nonsense — unless you have a system that silently converts one to the other. JavaScript is that system, and it doesn't always choose wisely.</p>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">The Basic Data Types</div>
+      <pre><span class="kw">let</span> <span class="var-name">name</span>        <span class="op">=</span> <span class="str">"Celeste"</span>;  <span class="cmt">// string — text in quotes</span>
+<span class="kw">let</span> <span class="var-name">age</span>         <span class="op">=</span> <span class="num">28</span>;         <span class="cmt">// number — no quotes</span>
+<span class="kw">let</span> <span class="var-name">score</span>       <span class="op">=</span> <span class="num">9.4</span>;        <span class="cmt">// number — decimals work too</span>
+<span class="kw">let</span> <span class="var-name">isLoggedIn</span>  <span class="op">=</span> <span class="bool">false</span>;      <span class="cmt">// boolean — only true or false</span>
+<span class="kw">let</span> <span class="var-name">middleName</span>  <span class="op">=</span> <span class="bool">null</span>;       <span class="cmt">// null — intentionally empty</span>
+<span class="kw">let</span> <span class="var-name">nickname</span>;                 <span class="cmt">// undefined — declared but not assigned</span></pre>
+    </div>
+
+    <h3>Checking a Value's Type</h3>
+
+    <div class="code-block">
+      <div class="code-label">Using typeof</div>
+      <pre><span class="fn">console</span>.<span class="method">log</span>(<span class="kw">typeof</span> <span class="str">"hello"</span>);    <span class="cmt">// "string"</span>
+<span class="fn">console</span>.<span class="method">log</span>(<span class="kw">typeof</span> <span class="num">42</span>);         <span class="cmt">// "number"</span>
+<span class="fn">console</span>.<span class="method">log</span>(<span class="kw">typeof</span> <span class="bool">true</span>);       <span class="cmt">// "boolean"</span>
+<span class="fn">console</span>.<span class="method">log</span>(<span class="kw">typeof</span> <span class="bool">undefined</span>);  <span class="cmt">// "undefined"</span>
+<span class="fn">console</span>.<span class="method">log</span>(<span class="kw">typeof</span> <span class="bool">null</span>);       <span class="cmt">// "object" ← famous JavaScript quirk!</span></pre>
+    </div>
+
+    <h3>Type Coercion — When JavaScript Guesses (Sometimes Wrong)</h3>
+
+    <div class="code-block">
+      <div class="code-label">The Surprising + Operator</div>
+      <pre><span class="kw">let</span> <span class="var-name">a</span> <span class="op">=</span> <span class="str">"5"</span>;  <span class="cmt">// this is a string, not a number!</span>
+<span class="kw">let</span> <span class="var-name">b</span> <span class="op">=</span> <span class="num">3</span>;
+
+<span class="fn">console</span>.<span class="method">log</span>(a <span class="op">+</span> b);  <span class="cmt">// "53" — not 8!</span>
+<span class="cmt">// JavaScript saw a string + number, joined them as text</span>
+
+<span class="fn">console</span>.<span class="method">log</span>(<span class="str">"10"</span> <span class="op">-</span> <span class="num">4</span>); <span class="cmt">// 6 — subtraction converts the string to a number</span>
+<span class="fn">console</span>.<span class="method">log</span>(<span class="str">"10"</span> <span class="op">+</span> <span class="num">4</span>); <span class="cmt">// "104" — addition joins as text</span>
+<span class="fn">console</span>.<span class="method">log</span>(<span class="bool">true</span> <span class="op">+</span> <span class="num">1</span>);  <span class="cmt">// 2 — true becomes 1</span>
+<span class="fn">console</span>.<span class="method">log</span>(<span class="bool">false</span> <span class="op">+</span> <span class="num">1</span>); <span class="cmt">// 1 — false becomes 0</span></pre>
+    </div>
+
+    <h3>Converting Types on Purpose</h3>
+
+    <div class="code-block">
+      <div class="code-label">Explicit Type Conversion</div>
+      <pre><span class="kw">let</span> <span class="var-name">userInput</span> <span class="op">=</span> <span class="str">"42"</span>;              <span class="cmt">// came from a form as a string</span>
+<span class="kw">let</span> <span class="var-name">asNumber</span>  <span class="op">=</span> <span class="fn">Number</span>(userInput);  <span class="cmt">// 42 (now actually a number)</span>
+<span class="kw">let</span> <span class="var-name">asString</span>  <span class="op">=</span> <span class="fn">String</span>(<span class="num">42</span>);         <span class="cmt">// "42" (text)</span>
+<span class="kw">let</span> <span class="var-name">asBool</span>    <span class="op">=</span> <span class="fn">Boolean</span>(<span class="num">0</span>);          <span class="cmt">// false — 0 is "falsy"</span></pre>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Value</th><th>Truthy or Falsy?</th></tr>
+        <tr><td><code>0</code></td><td>Falsy</td></tr>
+        <tr><td><code>""</code> (empty string)</td><td>Falsy</td></tr>
+        <tr><td><code>null</code></td><td>Falsy</td></tr>
+        <tr><td><code>undefined</code></td><td>Falsy</td></tr>
+        <tr><td><code>NaN</code></td><td>Falsy</td></tr>
+        <tr><td>Everything else</td><td>Truthy</td></tr>
+      </table>
+    </div>
+
+    <p>This "truthy/falsy" concept becomes crucial in Unit 2 when you start writing conditionals.</p>
+
+    <div class="assignment">
+      <div class="assignment-label">📝 Project: Type Detective</div>
+      <h4>Exploring Types</h4>
+      <p>Declare 8–10 variables of different types, including at least one that will cause a coercion issue. Write code that: (1) prints the type of each variable using <code>typeof</code>, (2) deliberately triggers one coercion issue and logs the unexpected result, (3) fixes it using explicit conversion. Add comments explaining what you expect vs. what actually happens.</p>
+    </div>
+
+    <div class="pitfall">
+      <div class="pitfall-label">⚠️ Common Pitfalls</div>
+      <p><strong>null vs. undefined</strong> — Both mean "nothing," but differently. <code>undefined</code> means a variable was never given a value. <code>null</code> means someone deliberately set it to empty. This distinction matters when checking if data exists.</p>
+      <p><strong>NaN is still type "number"</strong> — <code>typeof NaN</code> returns <code>"number"</code>. Use <code>Number.isNaN()</code> to check for it.</p>
+      <p><strong>Always use === not ==</strong> — Triple equals checks both value AND type: <code>5 === "5"</code> is <code>false</code>. Double equals does type coercion first: <code>5 == "5"</code> is <code>true</code>. Always use <code>===</code> to avoid surprises.</p>
+    </div>
+
+    <div class="reflections">
+      <div class="reflections-label">💬 Reflection Questions</div>
+      <ol>
+        <li>In your own words, what's the difference between <code>null</code> and <code>undefined</code>?</li>
+        <li>Why do you think JavaScript automatically converts types instead of throwing errors like some other languages? What are the tradeoffs?</li>
+        <li>Before this section, would you have guessed that <code>"5" + 3</code> and <code>"5" - 3</code> give different results?</li>
+      </ol>
+    </div>
+
+    <div class="synthesis">
+      <div class="synthesis-label">Unit 1 — Synthesis</div>
+      <p>Variables are often described as the "nouns" of a programming language — they represent the <em>things</em> a program works with. How does the way you choose to name, declare, and type your variables shape the clarity and reliability of your code? If you were teaching someone to write their very first program, what one piece of advice about variables would you give them, and why?</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ UNIT 2 ═══ -->
+<div id="unit2">
+  <div class="unit-header">
+    <div class="unit-number">Unit 2</div>
+    <div class="unit-title">Conditionals</div>
+    <div class="unit-goal">By the end of this unit, you'll understand how programs make decisions — how they respond differently based on different inputs, states, and conditions.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-id">Section 2.1</div>
+    <h2>If, Else If, Else — Making Decisions</h2>
+
+    <p>A <strong>conditional</strong> gives your program the ability to choose. Rather than executing every line in a straight sequence, a conditional lets the program ask a question and take different paths depending on the answer.</p>
+
+    <p>This is the foundation of <em>responsive</em> programs — programs that behave differently based on what the user does. Without conditionals, every program would do the exact same thing every time, no matter what.</p>
+
+    <div class="mental-model">
+      <div class="mental-model-label">🧠 Mental Model</div>
+      <p>Think of a conditional like a fork in a road. Your program reaches the fork, checks a condition (like reading a road sign), and goes left or right. With <code>else if</code>, you have multiple forks in sequence. With <code>else</code>, you have a final default path if none of the earlier forks applied.</p>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">Basic if Statement</div>
+      <pre><span class="kw">let</span> <span class="var-name">temperature</span> <span class="op">=</span> <span class="num">85</span>;
+
+<span class="kw">if</span> (temperature <span class="op">&gt;</span> <span class="num">80</span>) {
+  <span class="fn">console</span>.<span class="method">log</span>(<span class="str">"It's hot outside."</span>);
+}
+<span class="cmt">// If the condition is true, the block runs. If false, it's skipped.</span></pre>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">if-else and if-else if-else</div>
+      <pre><span class="kw">let</span> <span class="var-name">score</span> <span class="op">=</span> <span class="num">78</span>;
+
+<span class="kw">if</span> (score <span class="op">&gt;=</span> <span class="num">90</span>) {
+  <span class="fn">console</span>.<span class="method">log</span>(<span class="str">"Grade: A"</span>);
+} <span class="kw">else if</span> (score <span class="op">&gt;=</span> <span class="num">80</span>) {
+  <span class="fn">console</span>.<span class="method">log</span>(<span class="str">"Grade: B"</span>);
+} <span class="kw">else if</span> (score <span class="op">&gt;=</span> <span class="num">70</span>) {
+  <span class="fn">console</span>.<span class="method">log</span>(<span class="str">"Grade: C"</span>);  <span class="cmt">// ← this one runs</span>
+} <span class="kw">else</span> {
+  <span class="fn">console</span>.<span class="method">log</span>(<span class="str">"Grade: F"</span>);
+}
+<span class="cmt">// JavaScript checks top to bottom, stops at the first true condition</span></pre>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Operator</th><th>Meaning</th><th>Example</th></tr>
+        <tr><td><code>===</code></td><td>Strictly equal</td><td><code>age === 18</code></td></tr>
+        <tr><td><code>!==</code></td><td>Not equal</td><td><code>status !== "banned"</code></td></tr>
+        <tr><td><code>&gt;</code></td><td>Greater than</td><td><code>score &gt; 60</code></td></tr>
+        <tr><td><code>&lt;</code></td><td>Less than</td><td><code>price &lt; 100</code></td></tr>
+        <tr><td><code>&gt;=</code></td><td>Greater than or equal</td><td><code>level &gt;= 5</code></td></tr>
+        <tr><td><code>&lt;=</code></td><td>Less than or equal</td><td><code>items &lt;= 10</code></td></tr>
+      </table>
+    </div>
+
+    <div class="assignment">
+      <div class="assignment-label">📝 Project: Smart Thermostat Logic</div>
+      <h4>Thermostat Simulator</h4>
+      <p>Build a program with a current temperature, a desired temperature, and a time of day ("morning", "afternoon", or "evening"). Print a recommendation based on those conditions. Consider edge cases: what if the temperature is already exactly right? What if it's late at night?</p>
+    </div>
+
+    <div class="pitfall">
+      <div class="pitfall-label">⚠️ Common Pitfalls</div>
+      <p><strong>Using <code>=</code> instead of <code>===</code> in a condition</strong> — <code>if (score = 100)</code> doesn't compare — it <em>sets</em> score to 100 and will always be truthy. This is a sneaky bug. Always use <code>===</code> to compare.</p>
+      <p><strong>Order of else if matters</strong> — Always check the most specific condition first. If you check <code>score >= 70</code> before <code>score >= 90</code>, the 90+ case will never run.</p>
+    </div>
+
+    <div class="reflections">
+      <div class="reflections-label">💬 Reflection Questions</div>
+      <ol>
+        <li>What's the difference between separate <code>if</code> statements vs. an <code>if-else if-else</code> chain?</li>
+        <li>Can you think of a real app that must be making conditional decisions? What might those conditions look like in code?</li>
+        <li>Why does the order of <code>else if</code> clauses matter? Write a short example that shows what goes wrong when they're in the wrong order.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 2.2 -->
+  <div id="unit2-2" class="section">
+    <div class="section-id">Section 2.2</div>
+    <h2>Logical Operators — Combining Conditions</h2>
+
+    <p>Real decisions are rarely based on a single condition. "Should this user see the admin panel?" depends on whether they're logged in <em>and</em> whether they have the right permission. "Should this discount apply?" depends on whether the order is large enough <em>or</em> whether they have a coupon.</p>
+
+    <p><strong>Logical operators</strong> let you combine multiple conditions: <code>&&</code> (AND), <code>||</code> (OR), and <code>!</code> (NOT).</p>
+
+    <div class="mental-model">
+      <div class="mental-model-label">🧠 Mental Model</div>
+      <p><code>&&</code> is a security checkpoint with two guards — both must wave you through. <code>||</code> is a door with two keys — either one opens it. <code>!</code> flips the answer — if something is true, <code>!</code> makes it false.</p>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">AND, OR, NOT</div>
+      <pre><span class="kw">let</span> <span class="var-name">isLoggedIn</span> <span class="op">=</span> <span class="bool">true</span>;
+<span class="kw">let</span> <span class="var-name">isAdmin</span>    <span class="op">=</span> <span class="bool">false</span>;
+
+<span class="cmt">// AND: both must be true</span>
+<span class="kw">if</span> (isLoggedIn <span class="op">&amp;&amp;</span> isAdmin) {
+  <span class="fn">console</span>.<span class="method">log</span>(<span class="str">"Access granted."</span>);
+} <span class="kw">else</span> {
+  <span class="fn">console</span>.<span class="method">log</span>(<span class="str">"Access denied."</span>); <span class="cmt">// ← runs (isAdmin is false)</span>
+}
+
+<span class="cmt">// OR: at least one must be true</span>
+<span class="kw">let</span> <span class="var-name">hasCoupon</span>   <span class="op">=</span> <span class="bool">false</span>;
+<span class="kw">let</span> <span class="var-name">orderTotal</span>  <span class="op">=</span> <span class="num">150</span>;
+<span class="kw">if</span> (hasCoupon <span class="op">||</span> orderTotal <span class="op">&gt;=</span> <span class="num">100</span>) {
+  <span class="fn">console</span>.<span class="method">log</span>(<span class="str">"Discount applied!"</span>); <span class="cmt">// ← runs (orderTotal qualifies)</span>
+}
+
+<span class="cmt">// NOT: flips the boolean</span>
+<span class="kw">let</span> <span class="var-name">userLoggedIn</span> <span class="op">=</span> <span class="bool">false</span>;
+<span class="kw">if</span> (<span class="op">!</span>userLoggedIn) {
+  <span class="fn">console</span>.<span class="method">log</span>(<span class="str">"Please log in."</span>);
+}</pre>
+    </div>
+
+    <h3>Combining Operators</h3>
+
+    <div class="code-block">
+      <div class="code-label">Complex Conditions</div>
+      <pre><span class="kw">let</span> <span class="var-name">age</span> <span class="op">=</span> <span class="num">17</span>;
+<span class="kw">let</span> <span class="var-name">hasParentPermission</span> <span class="op">=</span> <span class="bool">true</span>;
+
+<span class="kw">if</span> (age <span class="op">&gt;=</span> <span class="num">18</span> <span class="op">||</span> (age <span class="op">&gt;=</span> <span class="num">13</span> <span class="op">&amp;&amp;</span> hasParentPermission)) {
+  <span class="fn">console</span>.<span class="method">log</span>(<span class="str">"Allowed to sign up."</span>); <span class="cmt">// ← runs</span>
+} <span class="kw">else</span> {
+  <span class="fn">console</span>.<span class="method">log</span>(<span class="str">"Not eligible."</span>);
+}
+<span class="cmt">// Parentheses control order — just like in math</span></pre>
+    </div>
+
+    <p>An important behavior called <strong>short-circuit evaluation</strong>: with <code>&&</code>, if the left side is false, JavaScript never even looks at the right side. This prevents errors when the second check depends on the first being true.</p>
+
+    <div class="assignment">
+      <div class="assignment-label">📝 Project: Eligibility Checker</div>
+      <h4>Custom Eligibility Rules</h4>
+      <p>Design a program that determines eligibility for a service you choose (library card, scholarship, gym membership, free shipping). Use at least four input variables and at least two logical operators. Produce at least three different possible output messages. Describe the rules in plain English before writing the code.</p>
+    </div>
+
+    <div class="reflections">
+      <div class="reflections-label">💬 Reflection Questions</div>
+      <ol>
+        <li>Explain <code>&&</code> and <code>||</code> in your own words using a non-programming analogy.</li>
+        <li>What does "short-circuit evaluation" mean? Why is it useful?</li>
+        <li>Translate this to JavaScript: "A user can view this page if they are logged in AND either a subscriber OR an admin."</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 2.3 -->
+  <div id="unit2-3" class="section">
+    <div class="section-id">Section 2.3</div>
+    <h2>Switch Statements & the Ternary Operator</h2>
+
+    <p>When you're matching one variable against a long list of specific values, an <code>if-else if</code> chain can get repetitive. The <strong>switch statement</strong> is a cleaner alternative. The <strong>ternary operator</strong> is a compact way to express a simple two-path decision in a single line.</p>
+
+    <div class="mental-model">
+      <div class="mental-model-label">🧠 Mental Model</div>
+      <p>A switch is like a vending machine — you enter a code and it routes to one specific slot. A ternary is a one-question survey: "yes or no?" → do this or that.</p>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">Switch Statement</div>
+      <pre><span class="kw">let</span> <span class="var-name">dayOfWeek</span> <span class="op">=</span> <span class="str">"Wednesday"</span>;
+
+<span class="kw">switch</span> (dayOfWeek) {
+  <span class="kw">case</span> <span class="str">"Monday"</span>:
+    <span class="fn">console</span>.<span class="method">log</span>(<span class="str">"Start of the work week."</span>);
+    <span class="kw">break</span>; <span class="cmt">// IMPORTANT: stops here</span>
+  <span class="kw">case</span> <span class="str">"Wednesday"</span>:
+    <span class="fn">console</span>.<span class="method">log</span>(<span class="str">"Midweek checkpoint."</span>); <span class="cmt">// ← runs</span>
+    <span class="kw">break</span>;
+  <span class="kw">case</span> <span class="str">"Friday"</span>:
+    <span class="fn">console</span>.<span class="method">log</span>(<span class="str">"Almost the weekend!"</span>);
+    <span class="kw">break</span>;
+  <span class="kw">default</span>:
+    <span class="fn">console</span>.<span class="method">log</span>(<span class="str">"Regular day."</span>);
+}</pre>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">Ternary Operator</div>
+      <pre><span class="cmt">// condition ? valueIfTrue : valueIfFalse</span>
+<span class="kw">let</span> <span class="var-name">age</span>    <span class="op">=</span> <span class="num">20</span>;
+<span class="kw">let</span> <span class="var-name">access</span> <span class="op">=</span> age <span class="op">&gt;=</span> <span class="num">18</span> <span class="op">?</span> <span class="str">"Allowed"</span> <span class="op">:</span> <span class="str">"Denied"</span>;
+<span class="fn">console</span>.<span class="method">log</span>(access); <span class="cmt">// "Allowed"</span>
+
+<span class="kw">let</span> <span class="var-name">label</span> <span class="op">=</span> score <span class="op">&gt;=</span> <span class="num">60</span> <span class="op">?</span> <span class="str">"Pass"</span> <span class="op">:</span> <span class="str">"Fail"</span>; <span class="cmt">// good use</span>
+
+<span class="cmt">// Don't nest ternaries — it gets unreadable fast!</span>
+<span class="cmt">// Use if-else instead when logic is more complex</span></pre>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Situation</th><th>Better Choice</th></tr>
+        <tr><td>Matching one value against many specific options</td><td><code>switch</code></td></tr>
+        <tr><td>Range comparisons (&gt;, &lt;, &gt;=)</td><td><code>if-else if</code></td></tr>
+        <tr><td>Simple true/false assignment in one line</td><td>ternary</td></tr>
+        <tr><td>Complex, multi-condition logic</td><td><code>if-else if</code></td></tr>
+      </table>
+    </div>
+
+    <div class="pitfall">
+      <div class="pitfall-label">⚠️ Common Pitfalls</div>
+      <p><strong>Forgetting <code>break</code> in a switch</strong> — Without it, execution "falls through" to the next case and runs that too. Always include <code>break</code> unless you're intentionally using fall-through (and if you are, add a comment explaining why).</p>
+      <p><strong>Switch doesn't work for ranges</strong> — Switch uses strict equality. You can't do <code>case score >= 90</code>. For ranges, use <code>if-else if</code>.</p>
+    </div>
+
+    <div class="synthesis">
+      <div class="synthesis-label">Unit 2 — Synthesis</div>
+      <p>Conditionals are the "decision-making" layer of a program. Think about a real app you use — a streaming service, a navigation app, a social platform. Identify at least three places where that app must be making conditional decisions. What would those conditions look like in code? What would the app do if those conditionals didn't exist?</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ UNIT 3 ═══ -->
+<div id="unit3">
+  <div class="unit-header">
+    <div class="unit-number">Unit 3</div>
+    <div class="unit-title">Functions</div>
+    <div class="unit-goal">By the end of this unit, you'll understand how to write reusable, well-named blocks of code — and why this is one of the most important habits in programming.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-id">Section 3.1</div>
+    <h2>Defining and Calling Functions</h2>
+
+    <p>A <strong>function</strong> is a named, reusable block of code that performs a specific task. Instead of writing the same logic over and over, you write it once, give it a name, and <em>call</em> it whenever you need it.</p>
+
+    <p>A well-named function tells the reader what the code does before they read how it does it. Programs built from small, well-defined functions are easier to read, debug, and update.</p>
+
+    <div class="mental-model">
+      <div class="mental-model-label">🧠 Mental Model</div>
+      <p>A function is like a recipe. The recipe has a name ("Make Pasta"), a list of ingredients (inputs), and a set of steps (the body). Once you've written the recipe, you don't rewrite it — you just say "make pasta" whenever you need it.</p>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">Defining and Calling</div>
+      <pre><span class="kw">function</span> <span class="fn">greetUser</span>() {
+  <span class="fn">console</span>.<span class="method">log</span>(<span class="str">"Welcome! Let's get started."</span>);
+}
+
+<span class="fn">greetUser</span>(); <span class="cmt">// call it once</span>
+<span class="fn">greetUser</span>(); <span class="cmt">// call it again — same result, zero extra code</span></pre>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">Functions with Parameters and Return Values</div>
+      <pre><span class="cmt">// Parameter: a named placeholder for input</span>
+<span class="kw">function</span> <span class="fn">greetByName</span>(name) {
+  <span class="fn">console</span>.<span class="method">log</span>(<span class="str">`Welcome, </span><span class="op">${</span>name<span class="op">}</span><span class="str">!`</span>);
+}
+<span class="fn">greetByName</span>(<span class="str">"Aaliya"</span>); <span class="cmt">// Argument: the actual value you pass in</span>
+
+<span class="cmt">// Return values: giving something back</span>
+<span class="kw">function</span> <span class="fn">calculateTip</span>(billAmount, tipPercent) {
+  <span class="kw">let</span> <span class="var-name">tip</span>   <span class="op">=</span> billAmount <span class="op">*</span> (tipPercent <span class="op">/</span> <span class="num">100</span>);
+  <span class="kw">let</span> <span class="var-name">total</span> <span class="op">=</span> billAmount <span class="op">+</span> tip;
+  <span class="kw">return</span> total; <span class="cmt">// sends the value back to the caller</span>
+}
+
+<span class="kw">let</span> <span class="var-name">dinnerTotal</span> <span class="op">=</span> <span class="fn">calculateTip</span>(<span class="num">64.50</span>, <span class="num">20</span>);
+<span class="fn">console</span>.<span class="method">log</span>(<span class="str">`Total with tip: $</span><span class="op">${</span>dinnerTotal<span class="op">}</span><span class="str">`</span>); <span class="cmt">// $77.4</span></pre>
+    </div>
+
+    <div class="pitfall">
+      <div class="pitfall-label">⚠️ Common Pitfalls</div>
+      <p><strong>Forgetting the parentheses when calling</strong> — <code>greetUser</code> without <code>()</code> just references the function. <code>greetUser()</code> actually runs it.</p>
+      <p><strong><code>return</code> ends the function immediately</strong> — Any code after a <code>return</code> statement is unreachable and will never run.</p>
+      <p><strong>Forgetting to use the return value</strong> — <code>let result = addNumbers(5, 3)</code> stores it. <code>addNumbers(5, 3)</code> alone calculates and immediately discards the result.</p>
+    </div>
+
+    <div class="reflections">
+      <div class="reflections-label">💬 Reflection Questions</div>
+      <ol>
+        <li>What's the difference between a parameter and an argument? Create your own example.</li>
+        <li>Why is <code>return</code> important? What happens if you forget it?</li>
+        <li>If you copy-paste the same 10 lines of logic in 8 different places and then find a bug, what problem do you have? How would functions have prevented it?</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 3.2 -->
+  <div id="unit3-2" class="section">
+    <div class="section-id">Section 3.2</div>
+    <h2>Scope — Where Variables Live</h2>
+
+    <p><strong>Scope</strong> refers to where a variable is visible and accessible in your code. A variable declared inside a function is <em>local</em> to that function — it only exists while that function runs. A variable declared at the top level is <em>global</em> — accessible everywhere.</p>
+
+    <div class="mental-model">
+      <div class="mental-model-label">🧠 Mental Model</div>
+      <p>Scope is like the difference between a public bulletin board (global) and a private notebook (local). Information in the notebook only exists while that person is working. Once they close it, it's gone. The bulletin board is always there for everyone.</p>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">Local vs. Global Scope</div>
+      <pre><span class="kw">function</span> <span class="fn">calculateBonus</span>(salary) {
+  <span class="kw">let</span> <span class="var-name">bonusRate</span> <span class="op">=</span> <span class="num">0.10</span>; <span class="cmt">// local — only exists inside this function</span>
+  <span class="kw">return</span> salary <span class="op">*</span> bonusRate;
+}
+
+<span class="fn">calculateBonus</span>(<span class="num">50000</span>);
+<span class="fn">console</span>.<span class="method">log</span>(bonusRate); <span class="cmt">// ReferenceError — doesn't exist out here!</span>
+
+<span class="kw">let</span> <span class="var-name">appName</span> <span class="op">=</span> <span class="str">"BudgetTracker"</span>; <span class="cmt">// global — accessible everywhere</span>
+
+<span class="kw">function</span> <span class="fn">showHeader</span>() {
+  <span class="fn">console</span>.<span class="method">log</span>(<span class="str">`App: </span><span class="op">${</span>appName<span class="op">}</span><span class="str">`</span>); <span class="cmt">// can access the global</span>
+}</pre>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">Better: Functions That Return Instead of Modify Globals</div>
+      <pre><span class="cmt">// Risky way: function silently changes a global</span>
+<span class="kw">let</span> <span class="var-name">total</span> <span class="op">=</span> <span class="num">0</span>;
+<span class="kw">function</span> <span class="fn">addItem</span>(price) { total <span class="op">=</span> total <span class="op">+</span> price; }
+
+<span class="cmt">// Better way: function takes input, returns output, touches no globals</span>
+<span class="kw">function</span> <span class="fn">addItem</span>(currentTotal, price) {
+  <span class="kw">return</span> currentTotal <span class="op">+</span> price;
+}
+<span class="kw">let</span> <span class="var-name">total</span> <span class="op">=</span> <span class="num">0</span>;
+total <span class="op">=</span> <span class="fn">addItem</span>(total, <span class="num">10</span>);
+total <span class="op">=</span> <span class="fn">addItem</span>(total, <span class="num">25</span>);
+<span class="fn">console</span>.<span class="method">log</span>(total); <span class="cmt">// 35</span></pre>
+    </div>
+
+    <div class="reflections">
+      <div class="reflections-label">💬 Reflection Questions</div>
+      <ol>
+        <li>In your own words, what does it mean for a variable to be "out of scope"?</li>
+        <li>Why might relying on global variables make a large program hard to debug?</li>
+        <li>What's the difference between a function that modifies a global vs. one that takes input and returns output? Which is generally better, and why?</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 3.3 -->
+  <div id="unit3-3" class="section">
+    <div class="section-id">Section 3.3</div>
+    <h2>Arrow Functions — A Shorter Way to Write Functions</h2>
+
+    <p>JavaScript has more than one way to write a function. Beyond the standard <code>function</code> declaration, there are <strong>arrow functions</strong> — a more compact syntax that's become the dominant style in modern JavaScript. You'll see them constantly, so it's important to get comfortable reading and writing them.</p>
+
+    <div class="code-block">
+      <div class="code-label">Three Ways to Write the Same Function</div>
+      <pre><span class="cmt">// 1. Function declaration (what you've learned so far)</span>
+<span class="kw">function</span> <span class="fn">square</span>(n) {
+  <span class="kw">return</span> n <span class="op">*</span> n;
+}
+
+<span class="cmt">// 2. Arrow function (same thing, shorter)</span>
+<span class="kw">const</span> <span class="var-name">square</span> <span class="op">=</span> (n) <span class="op">=&gt;</span> {
+  <span class="kw">return</span> n <span class="op">*</span> n;
+};
+
+<span class="cmt">// 3. Compact arrow function (single expression — return is implied)</span>
+<span class="kw">const</span> <span class="var-name">square</span> <span class="op">=</span> n <span class="op">=&gt;</span> n <span class="op">*</span> n;
+
+<span class="cmt">// All three do exactly the same thing:</span>
+<span class="fn">console</span>.<span class="method">log</span>(<span class="fn">square</span>(<span class="num">5</span>)); <span class="cmt">// 25</span></pre>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">Arrow Function Examples</div>
+      <pre><span class="kw">const</span> <span class="var-name">add</span>    <span class="op">=</span> (a, b) <span class="op">=&gt;</span> a <span class="op">+</span> b;          <span class="cmt">// multiple params need ( )</span>
+<span class="kw">const</span> <span class="var-name">greet</span>  <span class="op">=</span> name <span class="op">=&gt;</span> <span class="str">`Hello, </span><span class="op">${</span>name<span class="op">}</span><span class="str">!`</span>;   <span class="cmt">// single param — no ( ) needed</span>
+<span class="kw">const</span> <span class="var-name">sayHi</span>  <span class="op">=</span> () <span class="op">=&gt;</span> <span class="str">"Hi there!"</span>;         <span class="cmt">// no params — () is required</span></pre>
+    </div>
+
+    <div class="pitfall">
+      <div class="pitfall-label">⚠️ Common Pitfalls</div>
+      <p><strong>Implicit return only works without curly braces</strong> — <code>n =&gt; n * 2</code> works. <code>n =&gt; &#123; n * 2 &#125;</code> returns <code>undefined</code> because you need an explicit <code>return</code> inside curly braces.</p>
+      <p><strong>Arrow functions and <code>this</code></strong> — Arrow functions handle the <code>this</code> keyword differently. This matters when writing object methods (Unit 5). For now, just know the difference exists.</p>
+    </div>
+
+    <div class="synthesis">
+      <div class="synthesis-label">Unit 3 — Synthesis</div>
+      <p>"Don't Repeat Yourself" (DRY) is a core principle in programming. But functions aren't just about avoiding repetition — they're about creating a <em>vocabulary</em> for your program. When you name a function <code>calculateTax</code> or <code>validatePassword</code>, you're creating building blocks. How does thinking in functions change the way you design code? What would a program look like that ignored this principle entirely?</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ UNIT 4 ═══ -->
+<div id="unit4">
+  <div class="unit-header">
+    <div class="unit-number">Unit 4</div>
+    <div class="unit-title">Arrays</div>
+    <div class="unit-goal">By the end of this unit, you'll know how to store, access, loop through, and transform lists of data — one of the most essential skills in programming.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-id">Section 4.1</div>
+    <h2>Creating and Accessing Arrays</h2>
+
+    <p>An <strong>array</strong> is an ordered list of values stored in a single variable. Instead of making separate variables for every item in a list, an array lets you group related values together.</p>
+
+    <p>Real programs are full of lists: a shopping cart, search results, a to-do list, a leaderboard. Arrays are how programs represent and work with lists.</p>
+
+    <div class="mental-model">
+      <div class="mental-model-label">🧠 Mental Model</div>
+      <p>An array is like a row of numbered lockers. Each locker has an address (its <em>index</em>), starting from 0. You can look inside any locker by its number, put something new in, or check how many lockers there are.</p>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">Creating and Accessing Arrays</div>
+      <pre><span class="kw">let</span> <span class="var-name">fruits</span> <span class="op">=</span> [<span class="str">"apple"</span>, <span class="str">"banana"</span>, <span class="str">"cherry"</span>];
+<span class="kw">let</span> <span class="var-name">scores</span> <span class="op">=</span> [<span class="num">98</span>, <span class="num">74</span>, <span class="num">85</span>, <span class="num">91</span>];
+<span class="kw">let</span> <span class="var-name">empty</span>  <span class="op">=</span> [];  <span class="cmt">// an empty array</span>
+
+<span class="cmt">// Accessing by index (STARTS AT 0!)</span>
+<span class="fn">console</span>.<span class="method">log</span>(fruits[<span class="num">0</span>]);  <span class="cmt">// "apple"  ← first element</span>
+<span class="fn">console</span>.<span class="method">log</span>(fruits[<span class="num">1</span>]);  <span class="cmt">// "banana"</span>
+<span class="fn">console</span>.<span class="method">log</span>(fruits[<span class="num">2</span>]);  <span class="cmt">// "cherry" ← last element</span>
+<span class="fn">console</span>.<span class="method">log</span>(fruits[<span class="num">3</span>]);  <span class="cmt">// undefined — doesn't exist!</span>
+
+<span class="cmt">// Length and last element</span>
+<span class="fn">console</span>.<span class="method">log</span>(fruits.<span class="method">length</span>);            <span class="cmt">// 3</span>
+<span class="fn">console</span>.<span class="method">log</span>(fruits[fruits.<span class="method">length</span> <span class="op">-</span> <span class="num">1</span>]); <span class="cmt">// "cherry" — last element pattern</span>
+
+<span class="cmt">// Adding and removing</span>
+fruits.<span class="method">push</span>(<span class="str">"date"</span>);    <span class="cmt">// add to end</span>
+fruits.<span class="method">pop</span>();           <span class="cmt">// remove from end</span>
+fruits.<span class="method">unshift</span>(<span class="str">"fig"</span>); <span class="cmt">// add to beginning</span>
+fruits.<span class="method">shift</span>();          <span class="cmt">// remove from beginning</span></pre>
+    </div>
+
+    <div class="pitfall">
+      <div class="pitfall-label">⚠️ Common Pitfalls</div>
+      <p><strong>Off-by-one errors</strong> — The last element is at index <code>length - 1</code>, not <code>length</code>. <code>fruits[fruits.length]</code> is always <code>undefined</code>.</p>
+      <p><strong><code>const</code> arrays can still be modified</strong> — <code>const list = [1, 2, 3]</code> means you can't reassign the variable, but you <em>can</em> still push, pop, or change elements inside it.</p>
+    </div>
+
+    <div class="reflections">
+      <div class="reflections-label">💬 Reflection Questions</div>
+      <ol>
+        <li>Why does array indexing start at 0 instead of 1?</li>
+        <li>What does <code>array.length - 1</code> give you? Why is that useful?</li>
+        <li>Describe a real feature in an app that could be built using an array. What would the array contain?</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 4.2 -->
+  <div id="unit4-2" class="section">
+    <div class="section-id">Section 4.2</div>
+    <h2>Iterating Over Arrays — Doing Something With Every Item</h2>
+
+    <p>Having data in an array is only useful if you can work with each item. <strong>Iteration</strong> means going through each element one by one — to display it, process it, filter it, or transform it.</p>
+
+    <div class="mental-model">
+      <div class="mental-model-label">🧠 Mental Model</div>
+      <p>Iteration is like reading every item on a shopping list, one at a time. You don't skip any, and you do something with each one — check it off, add it to your cart, compare the price.</p>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">Three Ways to Loop Over an Array</div>
+      <pre><span class="kw">let</span> <span class="var-name">animals</span> <span class="op">=</span> [<span class="str">"cat"</span>, <span class="str">"dog"</span>, <span class="str">"rabbit"</span>];
+
+<span class="cmt">// 1. Classic for loop (use when you need the index)</span>
+<span class="kw">for</span> (<span class="kw">let</span> <span class="var-name">i</span> <span class="op">=</span> <span class="num">0</span>; i <span class="op">&lt;</span> animals.<span class="method">length</span>; i<span class="op">++</span>) {
+  <span class="fn">console</span>.<span class="method">log</span>(<span class="str">`Animal </span><span class="op">${</span>i <span class="op">+</span> <span class="num">1</span><span class="op">}</span><span class="str">: </span><span class="op">${</span>animals[i]<span class="op">}</span><span class="str">`</span>);
+}
+
+<span class="cmt">// 2. for...of loop (cleaner — use when you just need the value)</span>
+<span class="kw">for</span> (<span class="kw">let</span> <span class="var-name">animal</span> <span class="kw">of</span> animals) {
+  <span class="fn">console</span>.<span class="method">log</span>(animal);
+}
+
+<span class="cmt">// 3. forEach (arrow function per item)</span>
+animals.<span class="method">forEach</span>(animal <span class="op">=&gt;</span> <span class="fn">console</span>.<span class="method">log</span>(animal.<span class="method">toUpperCase</span>()));</pre>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">map and filter — Transforming and Selecting</div>
+      <pre><span class="kw">let</span> <span class="var-name">prices</span> <span class="op">=</span> [<span class="num">10</span>, <span class="num">25</span>, <span class="num">8</span>, <span class="num">40</span>];
+
+<span class="cmt">// map: transform each item into a new array</span>
+<span class="kw">let</span> <span class="var-name">discounted</span> <span class="op">=</span> prices.<span class="method">map</span>(price <span class="op">=&gt;</span> price <span class="op">*</span> <span class="num">0.9</span>);
+<span class="fn">console</span>.<span class="method">log</span>(discounted);  <span class="cmt">// [9, 22.5, 7.2, 36]</span>
+<span class="fn">console</span>.<span class="method">log</span>(prices);      <span class="cmt">// [10, 25, 8, 40] — original unchanged!</span>
+
+<span class="cmt">// filter: keep only items that pass a test</span>
+<span class="kw">let</span> <span class="var-name">scores</span>  <span class="op">=</span> [<span class="num">88</span>, <span class="num">42</span>, <span class="num">95</span>, <span class="num">61</span>, <span class="num">73</span>];
+<span class="kw">let</span> <span class="var-name">passing</span> <span class="op">=</span> scores.<span class="method">filter</span>(score <span class="op">=&gt;</span> score <span class="op">&gt;=</span> <span class="num">70</span>);
+<span class="fn">console</span>.<span class="method">log</span>(passing); <span class="cmt">// [88, 95, 73]</span></pre>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Method</th><th>Use When</th><th>Returns</th></tr>
+        <tr><td><code>for</code> / <code>for...of</code></td><td>General iteration</td><td>Nothing (side effects)</td></tr>
+        <tr><td><code>forEach</code></td><td>Execute action per item</td><td>Nothing</td></tr>
+        <tr><td><code>map</code></td><td>Transform each item</td><td>New array (same length)</td></tr>
+        <tr><td><code>filter</code></td><td>Keep some items</td><td>New array (shorter or same)</td></tr>
+      </table>
+    </div>
+
+    <div class="pitfall">
+      <div class="pitfall-label">⚠️ Common Pitfalls</div>
+      <p><strong><code>map</code> and <code>filter</code> don't modify the original</strong> — They always return a new array. The original is untouched. This is intentional and safe behavior.</p>
+      <p><strong><code>forEach</code> returns nothing</strong> — If you do <code>let result = array.forEach(...)</code>, result is <code>undefined</code>. Use <code>map</code> when you need a new array.</p>
+    </div>
+
+    <div class="reflections">
+      <div class="reflections-label">💬 Reflection Questions</div>
+      <ol>
+        <li>What's the difference between <code>map</code> and <code>forEach</code>?</li>
+        <li>Write a sentence explaining what <code>filter</code> does using a real-world analogy.</li>
+        <li>When would a traditional <code>for</code> loop with an index be better than <code>for...of</code>?</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 4.3 -->
+  <div id="unit4-3" class="section">
+    <div class="section-id">Section 4.3</div>
+    <h2>Searching, Sorting, and Transforming Arrays</h2>
+
+    <p>Beyond iterating, arrays have a rich set of built-in tools for finding specific items, sorting data, and computing single values from a whole list. Knowing this toolkit means spending less time writing loops from scratch.</p>
+
+    <div class="code-block">
+      <div class="code-label">Searching and Finding</div>
+      <pre><span class="kw">let</span> <span class="var-name">fruits</span> <span class="op">=</span> [<span class="str">"apple"</span>, <span class="str">"banana"</span>, <span class="str">"cherry"</span>];
+
+fruits.<span class="method">includes</span>(<span class="str">"banana"</span>);  <span class="cmt">// true</span>
+fruits.<span class="method">indexOf</span>(<span class="str">"cherry"</span>);  <span class="cmt">// 2</span>
+fruits.<span class="method">indexOf</span>(<span class="str">"grape"</span>);   <span class="cmt">// -1 (not found)</span>
+
+<span class="kw">let</span> <span class="var-name">scores</span>   <span class="op">=</span> [<span class="num">74</span>, <span class="num">88</span>, <span class="num">91</span>, <span class="num">55</span>, <span class="num">82</span>];
+<span class="kw">let</span> <span class="var-name">firstHigh</span> <span class="op">=</span> scores.<span class="method">find</span>(s <span class="op">=&gt;</span> s <span class="op">&gt;</span> <span class="num">85</span>);    <span class="cmt">// 88 — first match</span>
+<span class="kw">let</span> <span class="var-name">allHigh</span>   <span class="op">=</span> scores.<span class="method">filter</span>(s <span class="op">=&gt;</span> s <span class="op">&gt;</span> <span class="num">85</span>);  <span class="cmt">// [88, 91] — all matches</span></pre>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">Sorting — Numbers Need a Comparator!</div>
+      <pre><span class="kw">let</span> <span class="var-name">words</span> <span class="op">=</span> [<span class="str">"banana"</span>, <span class="str">"apple"</span>, <span class="str">"cherry"</span>];
+words.<span class="method">sort</span>();
+<span class="fn">console</span>.<span class="method">log</span>(words);  <span class="cmt">// ["apple", "banana", "cherry"] — alphabetical works</span>
+
+<span class="kw">let</span> <span class="var-name">numbers</span> <span class="op">=</span> [<span class="num">10</span>, <span class="num">1</span>, <span class="num">21</span>, <span class="num">2</span>];
+numbers.<span class="method">sort</span>();
+<span class="fn">console</span>.<span class="method">log</span>(numbers);  <span class="cmt">// [1, 10, 2, 21] — WRONG! Sorts as text</span>
+
+numbers.<span class="method">sort</span>((a, b) <span class="op">=&gt;</span> a <span class="op">-</span> b);  <span class="cmt">// ascending — correct!</span>
+numbers.<span class="method">sort</span>((a, b) <span class="op">=&gt;</span> b <span class="op">-</span> a);  <span class="cmt">// descending</span></pre>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">Reduce — Turning an Array Into a Single Value</div>
+      <pre><span class="kw">let</span> <span class="var-name">totals</span> <span class="op">=</span> [<span class="num">12</span>, <span class="num">25</span>, <span class="num">8</span>, <span class="num">34</span>, <span class="num">10</span>];
+<span class="kw">let</span> <span class="var-name">sum</span> <span class="op">=</span> totals.<span class="method">reduce</span>((accumulator, current) <span class="op">=&gt;</span> accumulator <span class="op">+</span> current, <span class="num">0</span>);
+<span class="fn">console</span>.<span class="method">log</span>(sum); <span class="cmt">// 89</span>
+<span class="cmt">// accumulator starts at 0, adds each item one by one</span></pre>
+    </div>
+
+    <div class="pitfall">
+      <div class="pitfall-label">⚠️ Common Pitfalls</div>
+      <p><strong>Default <code>.sort()</code> on numbers</strong> — JavaScript converts numbers to strings before sorting, so 10 comes before 2. Always use a comparator function: <code>.sort((a, b) =&gt; a - b)</code>.</p>
+      <p><strong><code>find</code> vs <code>filter</code></strong> — <code>find</code> returns the <em>first</em> matching element (or <code>undefined</code>). <code>filter</code> returns <em>all</em> matches as a new array.</p>
+    </div>
+
+    <div class="synthesis">
+      <div class="synthesis-label">Unit 4 — Synthesis</div>
+      <p>Arrays are one of the most universally important data structures in programming. What would be difficult or impossible to build without them? Think of an app feature you use regularly and trace how arrays might be powering it behind the scenes. What methods from this unit would that app likely use, and why?</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ UNIT 5 ═══ -->
+<div id="unit5">
+  <div class="unit-header">
+    <div class="unit-number">Unit 5</div>
+    <div class="unit-title">Objects</div>
+    <div class="unit-goal">By the end of this unit, you'll understand how to organize related data and behavior together, how methods work, and how to handle complex nested data structures.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-id">Section 5.1</div>
+    <h2>Creating and Accessing Objects</h2>
+
+    <p>An <strong>object</strong> is a collection of related data organized as <em>key-value pairs</em>. Where an array stores an ordered list, an object stores named properties — like a structured form or a contact card.</p>
+
+    <div class="mental-model">
+      <div class="mental-model-label">🧠 Mental Model</div>
+      <p>An object is like a contact card. Each field (name, phone, email) is a key, and the information in that field is the value. You look up information by asking for the field name, not a number.</p>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">Creating and Accessing Objects</div>
+      <pre><span class="kw">let</span> <span class="var-name">user</span> <span class="op">=</span> {
+  name:      <span class="str">"Priya Mehta"</span>,
+  age:       <span class="num">29</span>,
+  email:     <span class="str">"priya@example.com"</span>,
+  isPremium: <span class="bool">true</span>
+};
+
+<span class="cmt">// Dot notation — use for known property names</span>
+<span class="fn">console</span>.<span class="method">log</span>(user.name);      <span class="cmt">// "Priya Mehta"</span>
+<span class="fn">console</span>.<span class="method">log</span>(user.email);     <span class="cmt">// "priya@example.com"</span>
+
+<span class="cmt">// Bracket notation — use when the key is in a variable</span>
+<span class="kw">let</span> <span class="var-name">field</span> <span class="op">=</span> <span class="str">"age"</span>;
+<span class="fn">console</span>.<span class="method">log</span>(user[field]);    <span class="cmt">// 29</span>
+
+<span class="cmt">// Adding and updating properties</span>
+user.city <span class="op">=</span> <span class="str">"Toronto"</span>;       <span class="cmt">// add new property</span>
+user.age  <span class="op">=</span> <span class="num">30</span>;              <span class="cmt">// update existing</span>
+<span class="kw">delete</span> user.isPremium;        <span class="cmt">// remove a property</span></pre>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">Arrays of Objects — Very Common Pattern</div>
+      <pre><span class="kw">let</span> <span class="var-name">students</span> <span class="op">=</span> [
+  { name: <span class="str">"Aaliya"</span>, grade: <span class="num">88</span> },
+  { name: <span class="str">"Marcus"</span>, grade: <span class="num">74</span> },
+  { name: <span class="str">"Chen"</span>,   grade: <span class="num">95</span> }
+];
+
+students.<span class="method">forEach</span>(student <span class="op">=&gt;</span> {
+  <span class="fn">console</span>.<span class="method">log</span>(<span class="str">`</span><span class="op">${</span>student.name<span class="op">}</span><span class="str">: </span><span class="op">${</span>student.grade<span class="op">}</span><span class="str">`</span>);
+});</pre>
+    </div>
+
+    <div class="reflections">
+      <div class="reflections-label">💬 Reflection Questions</div>
+      <ol>
+        <li>Describe the difference between an array and an object. When would you choose one over the other?</li>
+        <li>What's the difference between dot notation and bracket notation? When would you need bracket notation specifically?</li>
+        <li>Why might returning <code>undefined</code> for a missing property be both useful and dangerous?</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 5.2 -->
+  <div id="unit5-2" class="section">
+    <div class="section-id">Section 5.2</div>
+    <h2>Methods and <code>this</code> — Objects That Do Things</h2>
+
+    <p>Objects can contain not just data, but also <em>behavior</em> — functions stored as properties. A function that belongs to an object is called a <strong>method</strong>. The <code>this</code> keyword lets a method refer to the object it belongs to, giving it access to the object's own properties.</p>
+
+    <div class="mental-model">
+      <div class="mental-model-label">🧠 Mental Model</div>
+      <p>If a contact object is a business card, a method is a button on that card. When you press "Send Email," the button knows whose card it belongs to and automatically uses that contact's email address. That self-awareness is what <code>this</code> provides.</p>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">Methods Using this</div>
+      <pre><span class="kw">let</span> <span class="var-name">dog</span> <span class="op">=</span> {
+  name:  <span class="str">"Biscuit"</span>,
+  breed: <span class="str">"Labrador"</span>,
+  describe() {  <span class="cmt">// shorthand method syntax</span>
+    <span class="fn">console</span>.<span class="method">log</span>(<span class="str">`</span><span class="op">${</span><span class="kw">this</span>.name<span class="op">}</span><span class="str"> is a </span><span class="op">${</span><span class="kw">this</span>.breed<span class="op">}</span><span class="str">.`</span>);
+  }
+};
+
+dog.<span class="method">describe</span>(); <span class="cmt">// "Biscuit is a Labrador."</span>
+<span class="cmt">// 'this' refers to the dog object itself</span></pre>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">A Counter Object</div>
+      <pre><span class="kw">let</span> <span class="var-name">counter</span> <span class="op">=</span> {
+  count: <span class="num">0</span>,
+  increment() { <span class="kw">this</span>.count<span class="op">++</span>; },
+  reset()     { <span class="kw">this</span>.count <span class="op">=</span> <span class="num">0</span>; },
+  getCount()  { <span class="kw">return</span> <span class="kw">this</span>.count; }
+};
+
+counter.<span class="method">increment</span>();
+counter.<span class="method">increment</span>();
+<span class="fn">console</span>.<span class="method">log</span>(counter.<span class="method">getCount</span>()); <span class="cmt">// 2</span>
+counter.<span class="method">reset</span>();
+<span class="fn">console</span>.<span class="method">log</span>(counter.<span class="method">getCount</span>()); <span class="cmt">// 0</span></pre>
+    </div>
+
+    <div class="pitfall">
+      <div class="pitfall-label">⚠️ Common Pitfalls</div>
+      <p><strong>Don't use arrow functions as object methods</strong> — Arrow functions don't have their own <code>this</code>. Inside an arrow function method, <code>this</code> refers to the outer scope, not the object. Always use regular <code>function</code> syntax for methods that need <code>this</code>.</p>
+    </div>
+
+    <div class="reflections">
+      <div class="reflections-label">💬 Reflection Questions</div>
+      <ol>
+        <li>In your own words, what does <code>this</code> refer to inside an object's method?</li>
+        <li>Why can't you use an arrow function as an object method if it needs to access the object's properties?</li>
+        <li>What's the conceptual advantage of putting functions inside objects rather than having them as separate global functions?</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 5.3 -->
+  <div id="unit5-3" class="section">
+    <div class="section-id">Section 5.3</div>
+    <h2>Nested Objects and Destructuring</h2>
+
+    <p>Real-world data is rarely flat. A user object might have a nested address. A product might have nested ratings. <strong>Destructuring</strong> is a shortcut for pulling values out of objects into named variables.</p>
+
+    <div class="code-block">
+      <div class="code-label">Nested Objects and Destructuring</div>
+      <pre><span class="kw">let</span> <span class="var-name">employee</span> <span class="op">=</span> {
+  name:    <span class="str">"Jordan Rivera"</span>,
+  role:    <span class="str">"Engineer"</span>,
+  contact: { email: <span class="str">"jordan@co.com"</span>, phone: <span class="str">"555-0102"</span> },
+  skills:  [<span class="str">"JavaScript"</span>, <span class="str">"Python"</span>, <span class="str">"SQL"</span>]
+};
+
+<span class="cmt">// Accessing nested values</span>
+<span class="fn">console</span>.<span class="method">log</span>(employee.contact.email); <span class="cmt">// "jordan@co.com"</span>
+<span class="fn">console</span>.<span class="method">log</span>(employee.skills[<span class="num">0</span>]);      <span class="cmt">// "JavaScript"</span>
+
+<span class="cmt">// Destructuring — extract into local variables</span>
+<span class="kw">let</span> { name, role } <span class="op">=</span> employee;
+<span class="fn">console</span>.<span class="method">log</span>(name); <span class="cmt">// "Jordan Rivera"</span>
+<span class="fn">console</span>.<span class="method">log</span>(role); <span class="cmt">// "Engineer"</span>
+
+<span class="cmt">// Nested destructuring</span>
+<span class="kw">let</span> { contact: { email } } <span class="op">=</span> employee;
+<span class="fn">console</span>.<span class="method">log</span>(email); <span class="cmt">// "jordan@co.com"</span>
+
+<span class="cmt">// Spread: shallow copy of an object</span>
+<span class="kw">let</span> <span class="var-name">original</span> <span class="op">=</span> { a: <span class="num">1</span>, b: <span class="num">2</span> };
+<span class="kw">let</span> <span class="var-name">copy</span>     <span class="op">=</span> { <span class="op">...</span>original, c: <span class="num">3</span> };
+<span class="fn">console</span>.<span class="method">log</span>(copy); <span class="cmt">// { a: 1, b: 2, c: 3 }</span></pre>
+    </div>
+
+    <div class="pitfall">
+      <div class="pitfall-label">⚠️ Common Pitfalls</div>
+      <p><strong>Drilling into a missing nested object causes a crash</strong> — If <code>user.address</code> is <code>undefined</code>, trying <code>user.address.city</code> throws a <code>TypeError</code>. Always check that a nested object exists before going deeper.</p>
+      <p><strong>Spread creates a shallow copy</strong> — Nested objects inside the copy are still shared by reference. Changing a nested property on the copy will also change it on the original.</p>
+    </div>
+
+    <div class="synthesis">
+      <div class="synthesis-label">Unit 5 — Synthesis</div>
+      <p>Objects are how we model the real world in code. Think about a familiar system — a school, a library, an e-commerce store. How would you represent its key "things" as objects? What properties and methods would they have? How would they relate to each other? Sketch out the structure and reflect on what choices you had to make — and why.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ UNIT 6 ═══ -->
+<div id="unit6">
+  <div class="unit-header">
+    <div class="unit-number">Unit 6</div>
+    <div class="unit-title">Events</div>
+    <div class="unit-goal">By the end of this unit, you'll understand how browser events work — how to listen for user actions and respond to them with JavaScript.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-id">Section 6.1</div>
+    <h2>How Events Work in the Browser</h2>
+
+    <p>Up to now, your programs ran from top to bottom and stopped. <strong>Event-driven programming</strong> is fundamentally different: your program waits for things to happen — a click, a keystroke, a page load — and responds. This is how almost every real web app works.</p>
+
+    <div class="mental-model">
+      <div class="mental-model-label">🧠 Mental Model</div>
+      <p>Think of event-driven code like a front desk receptionist. They don't do one thing and go home — they wait, respond to whoever walks in, handle that interaction, and then wait again. Events are the "someone walked in" moments.</p>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">Adding an Event Listener</div>
+      <pre><span class="cmt">// HTML: &lt;button id="myBtn"&gt;Click me&lt;/button&gt;</span>
+<span class="cmt">//       &lt;p id="message"&gt;Nothing yet.&lt;/p&gt;</span>
+
+<span class="kw">const</span> <span class="var-name">button</span>  <span class="op">=</span> document.<span class="method">getElementById</span>(<span class="str">"myBtn"</span>);
+<span class="kw">const</span> <span class="var-name">message</span> <span class="op">=</span> document.<span class="method">getElementById</span>(<span class="str">"message"</span>);
+
+button.<span class="method">addEventListener</span>(<span class="str">"click"</span>, () <span class="op">=&gt;</span> {
+  message.textContent <span class="op">=</span> <span class="str">"Button was clicked!"</span>;
+});
+
+<span class="cmt">// The event object gives you details about what happened</span>
+button.<span class="method">addEventListener</span>(<span class="str">"click"</span>, (event) <span class="op">=&gt;</span> {
+  <span class="fn">console</span>.<span class="method">log</span>(event.type);    <span class="cmt">// "click"</span>
+  <span class="fn">console</span>.<span class="method">log</span>(event.target);  <span class="cmt">// the element that was clicked</span>
+});</pre>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Event</th><th>Triggers when...</th></tr>
+        <tr><td><code>"click"</code></td><td>User clicks an element</td></tr>
+        <tr><td><code>"dblclick"</code></td><td>User double-clicks</td></tr>
+        <tr><td><code>"mouseover"</code></td><td>Mouse enters an element</td></tr>
+        <tr><td><code>"keydown"</code></td><td>A key is pressed</td></tr>
+        <tr><td><code>"keyup"</code></td><td>A key is released</td></tr>
+        <tr><td><code>"submit"</code></td><td>A form is submitted</td></tr>
+        <tr><td><code>"input"</code></td><td>Input field value changes</td></tr>
+        <tr><td><code>"load"</code></td><td>Page finishes loading</td></tr>
+      </table>
+    </div>
+
+    <div class="pitfall">
+      <div class="pitfall-label">⚠️ Common Pitfalls</div>
+      <p><strong>Running JS before the DOM is ready</strong> — If your script tag is in the <code>&lt;head&gt;</code>, the HTML hasn't loaded yet and <code>getElementById</code> will return <code>null</code>. Fix: put your script tag at the end of the <code>&lt;body&gt;</code>.</p>
+      <p><strong>Adding the same listener multiple times</strong> — Each <code>addEventListener</code> call adds a <em>new</em> listener. Calling it inside a loop means the handler fires multiple times per click.</p>
+    </div>
+  </div>
+
+  <!-- 6.2 -->
+  <div id="unit6-2" class="section">
+    <div class="section-id">Section 6.2</div>
+    <h2>Keyboard Events and Form Validation</h2>
+
+    <p>Buttons are just one type of interactive element. Real apps respond to keyboard input, text fields, and form submissions. <strong>Form events</strong> let your app listen to and validate user input in real time.</p>
+
+    <div class="code-block">
+      <div class="code-label">Form Events in Action</div>
+      <pre><span class="cmt">// Listen to every keystroke in an input</span>
+<span class="kw">const</span> <span class="var-name">input</span> <span class="op">=</span> document.<span class="method">getElementById</span>(<span class="str">"searchBox"</span>);
+input.<span class="method">addEventListener</span>(<span class="str">"input"</span>, (event) <span class="op">=&gt;</span> {
+  <span class="fn">console</span>.<span class="method">log</span>(<span class="str">"Current value:"</span>, event.target.value);
+});
+
+<span class="cmt">// Prevent form from reloading the page</span>
+<span class="kw">const</span> <span class="var-name">form</span> <span class="op">=</span> document.<span class="method">getElementById</span>(<span class="str">"signupForm"</span>);
+form.<span class="method">addEventListener</span>(<span class="str">"submit"</span>, (event) <span class="op">=&gt;</span> {
+  event.<span class="method">preventDefault</span>(); <span class="cmt">// stops the page from reloading!</span>
+  <span class="kw">const</span> <span class="var-name">name</span> <span class="op">=</span> document.<span class="method">getElementById</span>(<span class="str">"nameInput"</span>).value;
+  <span class="kw">if</span> (name <span class="op">===</span> <span class="str">""</span>) {
+    <span class="fn">alert</span>(<span class="str">"Please enter your name."</span>);
+  } <span class="kw">else</span> {
+    <span class="fn">console</span>.<span class="method">log</span>(<span class="str">`Signed up: </span><span class="op">${</span>name<span class="op">}</span><span class="str">`</span>);
+  }
+});</pre>
+    </div>
+
+    <div class="pitfall">
+      <div class="pitfall-label">⚠️ Common Pitfalls</div>
+      <p><strong>Forgetting <code>event.preventDefault()</code> on form submit</strong> — Without it, the page reloads and all your JavaScript work disappears. This is almost always the first thing to call in a submit handler.</p>
+      <p><strong><code>event.target.value</code> vs. <code>event.key</code></strong> — <code>.value</code> is the full current text in the input. <code>.key</code> is the single key that was just pressed. They serve different purposes.</p>
+    </div>
+  </div>
+
+  <!-- 6.3 -->
+  <div id="unit6-3" class="section">
+    <div class="section-id">Section 6.3</div>
+    <h2>Event Delegation — One Listener for Many Elements</h2>
+
+    <p>When you have many similar elements that each need to respond to clicks, attaching an individual listener to each one is inefficient. <strong>Event delegation</strong> is smarter: attach one listener to the parent, and let it handle events from all its children.</p>
+
+    <p>This works because of <strong>event bubbling</strong>: when you click a child element, the click event travels up the DOM tree to all its ancestors.</p>
+
+    <div class="code-block">
+      <div class="code-label">Event Delegation</div>
+      <pre><span class="cmt">// One listener on the parent handles all list items</span>
+<span class="kw">const</span> <span class="var-name">list</span> <span class="op">=</span> document.<span class="method">getElementById</span>(<span class="str">"taskList"</span>);
+
+list.<span class="method">addEventListener</span>(<span class="str">"click"</span>, (event) <span class="op">=&gt;</span> {
+  <span class="kw">if</span> (event.target.tagName <span class="op">===</span> <span class="str">"LI"</span>) {
+    event.target.classList.<span class="method">toggle</span>(<span class="str">"completed"</span>);
+  }
+});
+
+<span class="cmt">// Even items added LATER will work — no extra listener needed!</span>
+<span class="kw">const</span> <span class="var-name">newItem</span> <span class="op">=</span> document.<span class="method">createElement</span>(<span class="str">"li"</span>);
+newItem.textContent <span class="op">=</span> <span class="str">"New Task"</span>;
+list.<span class="method">appendChild</span>(newItem);</pre>
+    </div>
+
+    <div class="synthesis">
+      <div class="synthesis-label">Unit 6 — Synthesis</div>
+      <p>Think about an interactive web feature you use regularly — an autocomplete search box, an infinite scroll feed, a dynamic shopping cart. What events must it be listening for? How might it be using event delegation? How do the concepts from this unit come together to make that feature feel responsive?</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ UNIT 7 ═══ -->
+<div id="unit7">
+  <div class="unit-header">
+    <div class="unit-number">Unit 7</div>
+    <div class="unit-title">The DOM</div>
+    <div class="unit-goal">By the end of this unit, you'll be able to find, modify, create, and delete HTML elements using JavaScript — turning static pages into dynamic experiences.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-id">Section 7.1</div>
+    <h2>Understanding and Traversing the DOM</h2>
+
+    <p>The <strong>Document Object Model (DOM)</strong> is the browser's representation of an HTML page as a tree of objects that JavaScript can read and manipulate. Every element is a node in this tree, and JavaScript can find, modify, create, or delete any of it.</p>
+
+    <div class="mental-model">
+      <div class="mental-model-label">🧠 Mental Model</div>
+      <p>The DOM is like a family tree. <code>document</code> is the ancestor of everything. <code>html</code> has two children: <code>head</code> and <code>body</code>. Every element on the page is a descendant. You can navigate up to parents, down to children, sideways to siblings.</p>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">Selecting Elements</div>
+      <pre><span class="cmt">// By ID — returns one element</span>
+<span class="kw">const</span> <span class="var-name">header</span>  <span class="op">=</span> document.<span class="method">getElementById</span>(<span class="str">"mainHeader"</span>);
+
+<span class="cmt">// By CSS selector — returns first match</span>
+<span class="kw">const</span> <span class="var-name">firstBtn</span> <span class="op">=</span> document.<span class="method">querySelector</span>(<span class="str">".btn"</span>);
+
+<span class="cmt">// By CSS selector — returns ALL matches (NodeList)</span>
+<span class="kw">const</span> <span class="var-name">allBtns</span>  <span class="op">=</span> document.<span class="method">querySelectorAll</span>(<span class="str">".btn"</span>);
+
+<span class="cmt">// Traversing the tree</span>
+<span class="kw">const</span> <span class="var-name">list</span> <span class="op">=</span> document.<span class="method">getElementById</span>(<span class="str">"myList"</span>);
+list.parentElement;      <span class="cmt">// element containing the list</span>
+list.children;           <span class="cmt">// all child elements</span>
+list.firstElementChild;  <span class="cmt">// first child</span>
+list.nextElementSibling; <span class="cmt">// the element after this one</span></pre>
+    </div>
+
+    <div class="pitfall">
+      <div class="pitfall-label">⚠️ Common Pitfalls</div>
+      <p><strong><code>innerHTML</code> vs <code>textContent</code></strong> — <code>innerHTML</code> renders HTML tags. <code>textContent</code> displays literal text. Setting <code>innerHTML</code> from user input is a security risk (XSS attacks). Use <code>textContent</code> when you don't need to insert HTML.</p>
+      <p><strong>NodeList is not an array</strong> — <code>querySelectorAll</code> returns a NodeList, which lacks methods like <code>map</code> and <code>filter</code>. Convert it first: <code>Array.from(nodeList)</code>.</p>
+    </div>
+  </div>
+
+  <!-- 7.2 -->
+  <div id="unit7-2" class="section">
+    <div class="section-id">Section 7.2</div>
+    <h2>Creating, Modifying, and Removing Elements</h2>
+
+    <p>Reading the DOM is only half the power — the real capability is <em>changing</em> it. JavaScript can create new elements, update existing ones, and remove elements that are no longer needed. This is how single-page apps update without refreshing.</p>
+
+    <div class="code-block">
+      <div class="code-label">Modifying Elements and Creating New Ones</div>
+      <pre><span class="cmt">// Change content and style</span>
+<span class="kw">const</span> <span class="var-name">title</span> <span class="op">=</span> document.<span class="method">querySelector</span>(<span class="str">"h1"</span>);
+title.textContent <span class="op">=</span> <span class="str">"Updated Title"</span>;
+
+<span class="cmt">// Toggling CSS classes (better than inline styles)</span>
+<span class="kw">const</span> <span class="var-name">card</span> <span class="op">=</span> document.<span class="method">querySelector</span>(<span class="str">".card"</span>);
+card.classList.<span class="method">add</span>(<span class="str">"highlighted"</span>);
+card.classList.<span class="method">remove</span>(<span class="str">"highlighted"</span>);
+card.classList.<span class="method">toggle</span>(<span class="str">"highlighted"</span>);  <span class="cmt">// adds if absent, removes if present</span>
+
+<span class="cmt">// Creating and inserting a new element</span>
+<span class="kw">const</span> <span class="var-name">newPara</span> <span class="op">=</span> document.<span class="method">createElement</span>(<span class="str">"p"</span>);
+newPara.textContent <span class="op">=</span> <span class="str">"Added by JavaScript."</span>;
+document.<span class="method">getElementById</span>(<span class="str">"main"</span>).<span class="method">appendChild</span>(newPara);
+
+<span class="cmt">// Removing an element</span>
+document.<span class="method">getElementById</span>(<span class="str">"oldContent"</span>).<span class="method">remove</span>();</pre>
+    </div>
+  </div>
+
+  <!-- 7.3 -->
+  <div id="unit7-3" class="section">
+    <div class="section-id">Section 7.3</div>
+    <h2>Building Interactive Interfaces — DOM + Events Together</h2>
+
+    <p>The real power comes from combining the DOM and events. This is the fundamental loop of interactive web development: <strong>user interacts → event fires → DOM updates.</strong></p>
+
+    <p>You'll also see <strong>state</strong> for the first time: keeping track of what the app currently "knows" so the interface accurately reflects that information.</p>
+
+    <div class="code-block">
+      <div class="code-label">Complete Interactive Counter</div>
+      <pre><span class="kw">let</span> <span class="var-name">count</span> <span class="op">=</span> <span class="num">0</span>;  <span class="cmt">// APPLICATION STATE lives in a variable</span>
+
+<span class="kw">const</span> <span class="var-name">display</span> <span class="op">=</span> document.<span class="method">getElementById</span>(<span class="str">"countDisplay"</span>);
+
+<span class="kw">function</span> <span class="fn">updateDisplay</span>() {
+  display.textContent <span class="op">=</span> count;
+  display.style.color <span class="op">=</span> count <span class="op">&lt;</span> <span class="num">0</span> <span class="op">?</span> <span class="str">"red"</span> <span class="op">:</span> <span class="str">"black"</span>;
+}
+
+document.<span class="method">getElementById</span>(<span class="str">"increment"</span>).<span class="method">addEventListener</span>(<span class="str">"click"</span>, () <span class="op">=&gt;</span> {
+  count<span class="op">++</span>;
+  <span class="fn">updateDisplay</span>(); <span class="cmt">// always update the DOM after changing state</span>
+});
+
+document.<span class="method">getElementById</span>(<span class="str">"decrement"</span>).<span class="method">addEventListener</span>(<span class="str">"click"</span>, () <span class="op">=&gt;</span> {
+  count<span class="op">--</span>;
+  <span class="fn">updateDisplay</span>();
+});</pre>
+    </div>
+
+    <div class="pitfall">
+      <div class="pitfall-label">⚠️ Common Pitfalls</div>
+      <p><strong>Keeping the DOM in sync with state</strong> — Always update your state variable first, then update the DOM to reflect it. Never try to read state back out of the DOM — the DOM is just the display, not the source of truth.</p>
+    </div>
+
+    <div class="synthesis">
+      <div class="synthesis-label">Unit 7 — Synthesis</div>
+      <p>The DOM is the bridge between your JavaScript logic and the user experience. Look at a simple interactive web feature — a like button, a collapsible menu, a character counter in a text field. Describe in detail how you would build it using the concepts from this course. What data would you store? What events would you listen for? What DOM changes would you make?</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ UNIT 8 ═══ -->
+<div id="unit8">
+  <div class="unit-header">
+    <div class="unit-number">Unit 8</div>
+    <div class="unit-title">Sorting Algorithms</div>
+    <div class="unit-goal">By the end of this unit, you'll understand how sorting algorithms work under the hood — and why thinking about efficiency is a core skill for every programmer.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-id">Section 8.1</div>
+    <h2>Why Sorting Matters — Bubble Sort</h2>
+
+    <p><strong>Sorting</strong> is arranging items in a specific order. It's one of the oldest and most studied problems in computer science. This unit goes deeper than calling <code>.sort()</code> — you'll understand <em>how</em> sorting works, and how to think about the cost of an algorithm.</p>
+
+    <div class="mental-model">
+      <div class="mental-model-label">🧠 Mental Model</div>
+      <p>Imagine a deck of unsorted cards. One approach: go through the deck and whenever two adjacent cards are in the wrong order, swap them. Keep repeating until no swaps are needed. That's bubble sort — not the fastest, but perfectly clear to understand.</p>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">Bubble Sort</div>
+      <pre><span class="kw">function</span> <span class="fn">bubbleSort</span>(arr) {
+  <span class="kw">let</span> <span class="var-name">n</span> <span class="op">=</span> arr.length;
+
+  <span class="kw">for</span> (<span class="kw">let</span> <span class="var-name">i</span> <span class="op">=</span> <span class="num">0</span>; i <span class="op">&lt;</span> n <span class="op">-</span> <span class="num">1</span>; i<span class="op">++</span>) {
+    <span class="kw">for</span> (<span class="kw">let</span> <span class="var-name">j</span> <span class="op">=</span> <span class="num">0</span>; j <span class="op">&lt;</span> n <span class="op">-</span> <span class="num">1</span> <span class="op">-</span> i; j<span class="op">++</span>) {
+      <span class="kw">if</span> (arr[j] <span class="op">&gt;</span> arr[j <span class="op">+</span> <span class="num">1</span>]) {
+        <span class="cmt">// Swap adjacent elements</span>
+        [arr[j], arr[j <span class="op">+</span> <span class="num">1</span>]] <span class="op">=</span> [arr[j <span class="op">+</span> <span class="num">1</span>], arr[j]];
+      }
+    }
+  }
+  <span class="kw">return</span> arr;
+}
+
+<span class="fn">console</span>.<span class="method">log</span>(<span class="fn">bubbleSort</span>([<span class="num">5</span>, <span class="num">3</span>, <span class="num">8</span>, <span class="num">1</span>, <span class="num">4</span>])); <span class="cmt">// [1, 3, 4, 5, 8]</span></pre>
+    </div>
+
+    <p>For an array of <code>n</code> items, bubble sort compares up to <code>n × n</code> pairs in the worst case. If the array doubles in size, the work roughly quadruples. This is called <strong>O(n²)</strong> time complexity.</p>
+
+    <div class="reflections">
+      <div class="reflections-label">💬 Reflection Questions</div>
+      <ol>
+        <li>Describe bubble sort in plain English, step by step, without code or jargon.</li>
+        <li>Why does bubble sort get slower as the array gets larger?</li>
+        <li>In what situation would bubble sort actually perform well? (Hint: think about nearly-sorted data.)</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 8.2 -->
+  <div id="unit8-2" class="section">
+    <div class="section-id">Section 8.2</div>
+    <h2>Selection Sort and Insertion Sort</h2>
+
+    <p>Bubble sort's comparison pattern is quite random — it swaps whenever it finds a misplaced pair. <strong>Selection sort</strong> and <strong>insertion sort</strong> each represent a more purposeful approach.</p>
+
+    <div class="code-block">
+      <div class="code-label">Selection Sort — Find the Smallest, Place It First</div>
+      <pre><span class="kw">function</span> <span class="fn">selectionSort</span>(arr) {
+  <span class="kw">let</span> <span class="var-name">n</span> <span class="op">=</span> arr.length;
+
+  <span class="kw">for</span> (<span class="kw">let</span> <span class="var-name">i</span> <span class="op">=</span> <span class="num">0</span>; i <span class="op">&lt;</span> n <span class="op">-</span> <span class="num">1</span>; i<span class="op">++</span>) {
+    <span class="kw">let</span> <span class="var-name">minIndex</span> <span class="op">=</span> i;
+    <span class="kw">for</span> (<span class="kw">let</span> <span class="var-name">j</span> <span class="op">=</span> i <span class="op">+</span> <span class="num">1</span>; j <span class="op">&lt;</span> n; j<span class="op">++</span>) {
+      <span class="kw">if</span> (arr[j] <span class="op">&lt;</span> arr[minIndex]) minIndex <span class="op">=</span> j;
+    }
+    <span class="kw">if</span> (minIndex <span class="op">!==</span> i) {
+      [arr[i], arr[minIndex]] <span class="op">=</span> [arr[minIndex], arr[i]];
+    }
+  }
+  <span class="kw">return</span> arr;
+}</pre>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">Insertion Sort — Build a Sorted Section One Item at a Time</div>
+      <pre><span class="kw">function</span> <span class="fn">insertionSort</span>(arr) {
+  <span class="kw">for</span> (<span class="kw">let</span> <span class="var-name">i</span> <span class="op">=</span> <span class="num">1</span>; i <span class="op">&lt;</span> arr.length; i<span class="op">++</span>) {
+    <span class="kw">let</span> <span class="var-name">current</span> <span class="op">=</span> arr[i];
+    <span class="kw">let</span> <span class="var-name">j</span> <span class="op">=</span> i <span class="op">-</span> <span class="num">1</span>;
+
+    <span class="kw">while</span> (j <span class="op">&gt;=</span> <span class="num">0</span> <span class="op">&amp;&amp;</span> arr[j] <span class="op">&gt;</span> current) {
+      arr[j <span class="op">+</span> <span class="num">1</span>] <span class="op">=</span> arr[j];
+      j<span class="op">--</span>;
+    }
+    arr[j <span class="op">+</span> <span class="num">1</span>] <span class="op">=</span> current;
+  }
+  <span class="kw">return</span> arr;
+}
+<span class="cmt">// Like sorting cards in your hand — pick up each card</span>
+<span class="cmt">// and slide it into the right place among the sorted ones</span></pre>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Algorithm</th><th>Best Case</th><th>Worst Case</th><th>Strength</th></tr>
+        <tr><td>Bubble Sort</td><td>O(n)</td><td>O(n²)</td><td>Simple, detects sorted arrays</td></tr>
+        <tr><td>Selection Sort</td><td>O(n²)</td><td>O(n²)</td><td>Minimizes swaps</td></tr>
+        <tr><td>Insertion Sort</td><td>O(n)</td><td>O(n²)</td><td>Fast on small/nearly-sorted data</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 8.3 -->
+  <div id="unit8-3" class="section">
+    <div class="section-id">Section 8.3</div>
+    <h2>Merge Sort — Divide and Conquer</h2>
+
+    <p>The three previous algorithms all scale as O(n²) — they become unacceptably slow on large datasets. <strong>Merge sort</strong> is a fundamentally different approach: instead of solving the whole problem at once, break it into smaller subproblems, solve each one, and combine the results. This is called <strong>divide and conquer</strong>.</p>
+
+    <div class="mental-model">
+      <div class="mental-model-label">🧠 Mental Model</div>
+      <p>Imagine sorting a huge stack of papers. Split the stack in half. Each half further splits until you're holding a single sheet. Then merge: two single sheets are trivially sorted into a pair. Two pairs merge into a sorted group of four. Continue merging. Each merge is simple; the power comes from doing many small, easy merges.</p>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">Merge Sort</div>
+      <pre><span class="kw">function</span> <span class="fn">merge</span>(left, right) {
+  <span class="kw">let</span> <span class="var-name">result</span> <span class="op">=</span> [], i <span class="op">=</span> <span class="num">0</span>, j <span class="op">=</span> <span class="num">0</span>;
+
+  <span class="kw">while</span> (i <span class="op">&lt;</span> left.length <span class="op">&amp;&amp;</span> j <span class="op">&lt;</span> right.length) {
+    <span class="kw">if</span> (left[i] <span class="op">&lt;=</span> right[j]) {
+      result.<span class="method">push</span>(left[i<span class="op">++</span>]);
+    } <span class="kw">else</span> {
+      result.<span class="method">push</span>(right[j<span class="op">++</span>]);
+    }
+  }
+  <span class="kw">return</span> result.<span class="method">concat</span>(left.<span class="method">slice</span>(i)).<span class="method">concat</span>(right.<span class="method">slice</span>(j));
+}
+
+<span class="kw">function</span> <span class="fn">mergeSort</span>(arr) {
+  <span class="kw">if</span> (arr.length <span class="op">&lt;=</span> <span class="num">1</span>) <span class="kw">return</span> arr;  <span class="cmt">// base case — stop splitting</span>
+
+  <span class="kw">let</span> <span class="var-name">mid</span>   <span class="op">=</span> Math.<span class="method">floor</span>(arr.length <span class="op">/</span> <span class="num">2</span>);
+  <span class="kw">let</span> <span class="var-name">left</span>  <span class="op">=</span> <span class="fn">mergeSort</span>(arr.<span class="method">slice</span>(<span class="num">0</span>, mid));
+  <span class="kw">let</span> <span class="var-name">right</span> <span class="op">=</span> <span class="fn">mergeSort</span>(arr.<span class="method">slice</span>(mid));
+
+  <span class="kw">return</span> <span class="fn">merge</span>(left, right);
+}
+
+<span class="fn">console</span>.<span class="method">log</span>(<span class="fn">mergeSort</span>([<span class="num">5</span>, <span class="num">3</span>, <span class="num">8</span>, <span class="num">1</span>, <span class="num">4</span>])); <span class="cmt">// [1, 3, 4, 5, 8]</span></pre>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Array Size</th><th>O(n²) Operations</th><th>O(n log n) Operations</th></tr>
+        <tr><td>100</td><td>10,000</td><td>700</td></tr>
+        <tr><td>10,000</td><td>100,000,000</td><td>130,000</td></tr>
+        <tr><td>1,000,000</td><td>1,000,000,000,000</td><td>20,000,000</td></tr>
+      </table>
+    </div>
+
+    <p>The difference between O(n²) and O(n log n) is not academic — it's the difference between code that runs in milliseconds and code that runs for hours.</p>
+
+    <div class="code-block">
+      <div class="code-label">JavaScript's Built-in Sort (Use This in Real Code)</div>
+      <pre><span class="kw">let</span> <span class="var-name">data</span> <span class="op">=</span> [<span class="num">5</span>, <span class="num">3</span>, <span class="num">8</span>, <span class="num">1</span>, <span class="num">4</span>];
+data.<span class="method">sort</span>((a, b) <span class="op">=&gt;</span> a <span class="op">-</span> b);  <span class="cmt">// ascending</span>
+data.<span class="method">sort</span>((a, b) <span class="op">=&gt;</span> b <span class="op">-</span> a);  <span class="cmt">// descending</span>
+
+<span class="cmt">// Sorting objects by a property</span>
+<span class="kw">let</span> <span class="var-name">people</span> <span class="op">=</span> [{name: <span class="str">"Zara"</span>, age: <span class="num">28</span>}, {name: <span class="str">"Abe"</span>, age: <span class="num">34</span>}];
+people.<span class="method">sort</span>((a, b) <span class="op">=&gt;</span> a.age <span class="op">-</span> b.age);  <span class="cmt">// by age</span>
+people.<span class="method">sort</span>((a, b) <span class="op">=&gt;</span> a.name.<span class="method">localeCompare</span>(b.name));  <span class="cmt">// alphabetically</span></pre>
+    </div>
+
+    <div class="synthesis">
+      <div class="synthesis-label">Unit 8 — Synthesis</div>
+      <p>Sorting is a microcosm of algorithmic thinking. You've seen multiple solutions to the same problem and discovered they're not equally good. What did this unit teach you beyond sorting itself? About comparing approaches, thinking about efficiency, and how simple ideas like "divide and conquer" scale to enormous problems? If you were building a system that needed to sort a million records in real time, what questions would you ask? What tradeoffs would you consider?</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ APPENDIX ═══ -->
+<div id="appendix">
+  <div class="unit-header">
+    <div class="unit-number">Reference</div>
+    <div class="unit-title">Appendices</div>
+    <div class="unit-goal">Quick-reference guides to keep open while you code.</div>
+  </div>
+
+  <div class="section">
+    <h2>Appendix A — JavaScript Quick Reference</h2>
+
+    <h3>Variable Declarations</h3>
+    <p><code>let</code> — reassignable. <code>const</code> — fixed value. Avoid <code>var</code>.</p>
+
+    <h3>Data Types</h3>
+    <p><code>string</code>, <code>number</code>, <code>boolean</code>, <code>null</code>, <code>undefined</code>, <code>object</code>, <code>array</code>. Always use <code>===</code> and <code>!==</code> for comparison.</p>
+
+    <h3>Template Literals</h3>
+    <div class="code-block"><pre><span class="str">`Hello, </span><span class="op">${</span>name<span class="op">}</span><span class="str">! You have </span><span class="op">${</span>count<span class="op">}</span><span class="str"> messages.`</span></pre></div>
+
+    <h3>Array Methods</h3>
+    <p><code>.push()</code>, <code>.pop()</code>, <code>.shift()</code>, <code>.unshift()</code>, <code>.map()</code>, <code>.filter()</code>, <code>.reduce()</code>, <code>.find()</code>, <code>.includes()</code>, <code>.sort()</code>, <code>.slice()</code>, <code>.splice()</code>, <code>.forEach()</code>, <code>.concat()</code></p>
+
+    <h3>Object Patterns</h3>
+    <p>Dot notation, bracket notation, destructuring, spread operator (<code>...</code>)</p>
+
+    <h3>DOM Selection</h3>
+    <p><code>querySelector()</code>, <code>querySelectorAll()</code>, <code>getElementById()</code></p>
+
+    <h3>DOM Manipulation</h3>
+    <p><code>.textContent</code>, <code>.innerHTML</code>, <code>.classList</code>, <code>.setAttribute()</code>, <code>.createElement()</code>, <code>.appendChild()</code>, <code>.remove()</code></p>
+
+    <h3>Events</h3>
+    <p><code>.addEventListener(event, callback)</code>, <code>.removeEventListener()</code>, <code>event.preventDefault()</code>, <code>event.target</code></p>
+  </div>
+
+  <div class="section">
+    <h2>Appendix B — Common Error Reference</h2>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Error Type</th><th>Common Cause</th></tr>
+        <tr><td><code>ReferenceError</code></td><td>Variable used before declaration, or out of scope</td></tr>
+        <tr><td><code>TypeError</code></td><td>Wrong type for an operation (e.g., calling a non-function)</td></tr>
+        <tr><td><code>SyntaxError</code></td><td>Mismatched brackets, missing quotes, typos in keywords</td></tr>
+        <tr><td><code>RangeError</code></td><td>Array index out of bounds, infinite recursion</td></tr>
+        <tr><td><code>undefined</code> returned</td><td>Function missing <code>return</code>, or accessing a missing property</td></tr>
+        <tr><td><code>NaN</code></td><td>Math operation on a non-number value</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Appendix C — Debugging Strategies</h2>
+    <p>When something breaks, try these steps in order:</p>
+    <p><strong>1. Read the error message.</strong> It tells you the error type and the exact line number. Don't skip this step.</p>
+    <p><strong>2. Add <code>console.log()</code>.</strong> Print the value of variables before and after the problematic line to trace what's happening.</p>
+    <p><strong>3. Check types with <code>typeof</code>.</strong> Many beginner bugs are type mismatches in disguise.</p>
+    <p><strong>4. Isolate the problem.</strong> Comment out code until the bug disappears, then slowly uncomment to narrow down the cause.</p>
+    <p><strong>5. Use browser DevTools.</strong> Press F12. The Console, Sources tab (with breakpoints), and Network tab are your tools.</p>
+    <p><strong>6. Rubber duck debugging.</strong> Explain your code out loud, line by line. You'll often find the bug while explaining it to an imaginary rubber duck.</p>
+    <p><strong>7. Take a break.</strong> Fresh eyes catch what tired eyes miss.</p>
+  </div>
+
+  <div class="section">
+    <h2>Appendix D — Portfolio Projects</h2>
+    <p>These projects combine multiple units and are suitable for a final portfolio:</p>
+    <p><strong>Budget Tracker</strong> — Variables, arrays, objects, DOM, events. Users enter income and expenses; app displays running balance, categorized spending, and a simple chart.</p>
+    <p><strong>Word Frequency Analyzer</strong> — Strings, arrays, objects, sorting. Paste any text; app counts and sorts words by frequency and highlights the most common.</p>
+    <p><strong>Quiz Builder and Runner</strong> — Objects, arrays, DOM, events. Users create quizzes (stored as arrays of objects) and take them with live scoring.</p>
+    <p><strong>Sort Algorithm Visualizer</strong> — Sorting, DOM, events. Each sorting step is animated in the browser, showing comparisons and swaps in real time.</p>
+    <p><strong>Mini Project Management Board</strong> — Objects, arrays, DOM, events. A Kanban-style board where tasks can be created, moved between columns, and deleted.</p>
+  </div>
+
+  <a href="#home" class="back-to-top">↑ Back to top</a>
+</div>
+
+</main>
+
+<script>
+// ─── Progress Bar ───
+window.addEventListener("scroll", () => {
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const scrolled = (window.scrollY / docHeight) * 100;
+  document.getElementById("progress-bar").style.width = scrolled + "%";
+});
+
+// ─── Active nav link ───
+const sections = document.querySelectorAll("[id]");
+const navLinks = document.querySelectorAll(".nav-link");
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(link => {
+        link.classList.remove("active");
+        if (link.getAttribute("href") === "#" + entry.target.id) {
+          link.classList.add("active");
+        }
+      });
+    }
+  });
+}, { rootMargin: "-20% 0px -70% 0px" });
+
+sections.forEach(section => observer.observe(section));
+
+// ─── Mobile sidebar toggle ───
+function toggleSidebar() {
+  document.getElementById("sidebar").classList.toggle("open");
+}
+
+// Close sidebar on link click (mobile)
+document.querySelectorAll(".nav-link").forEach(link => {
+  link.addEventListener("click", () => {
+    document.getElementById("sidebar").classList.remove("open");
+  });
+});
+</script>
+</body>
+</html>
