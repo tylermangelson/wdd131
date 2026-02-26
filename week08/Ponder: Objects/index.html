@@ -12,9 +12,11 @@
 <body>
     <h1 id="courseName"></h1>
     <h2 id="courseCode"></h2>
+
     <label for="sectionNumber">Section Number</label>
-    <input id="sectionNumber" />
+    <input id="sectionNumber" placeholder="e.g. 1" />
     <button id="enrollStudent">Enroll Student</button>
+
     <table>
         <thead>
             <tr>
@@ -28,6 +30,23 @@
         <tbody id="sections"></tbody>
     </table>
 
+    <form id="addSectionForm">
+        <h3>Add New Section</h3>
+
+        <label for="newRoomNumber">Room Number</label>
+        <input id="newRoomNumber" placeholder="e.g. STC 353" required />
+
+        <label for="newEnrollment">Enrollment</label>
+        <input id="newEnrollment" type="number" min="0" placeholder="e.g. 30" required />
+
+        <label for="newDays">Days</label>
+        <input id="newDays" placeholder="e.g. TTh or MWF" required />
+
+        <label for="newInstructor">Instructor</label>
+        <input id="newInstructor" placeholder="e.g. Bro T" required />
+
+        <button type="submit">Add Section</button>
+    </form>
 </body>
 
 </html>

@@ -1,5 +1,3 @@
-
-
 const aCourse = {
     code: 'CSE121b',
     name: 'Javascript Language',
@@ -9,7 +7,6 @@ const aCourse = {
         { sectionNum: 2, roomNum: 'STC 347', enrolled: 28, days: 'TTh', instructor: 'Sis A' }
     ],
     enrollStudent: function (sectionNum) {
-        // find the right section...Array.findIndex will work here
         const sectionIndex = this.sections.findIndex(
             (section) => section.sectionNum == sectionNum
         );
@@ -26,13 +23,17 @@ function sectionTemplate(section) {
       <td>${section.roomNum}</td>
       <td>${section.enrolled}</td>
       <td>${section.days}</td>
-      <td>${section.instructor}</td></tr>`
+      <td>${section.instructor}</td></tr>`;
 }
 
 function renderSections(sections) {
     const html = sections.map(sectionTemplate);
     document.querySelector("#sections").innerHTML = html.join("");
 }
+
+// Populate course name and code
+document.querySelector("#courseName").textContent = aCourse.name;
+document.querySelector("#courseCode").textContent = aCourse.code;
 
 renderSections(aCourse.sections);
 
@@ -41,3 +42,21 @@ document.querySelector("#enrollStudent").addEventListener("click", function () {
     aCourse.enrollStudent(sectionNum);
 });
 
+const newSectionForm = document.querySelector("#addSectionForm");
+newSectionForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+    const roomNum = document.querySelector("#newRoomNumber").value;  // fix: was querySelecctor + wrong var name
+    const enrolled = document.querySelector("#newEnrollment").value;
+    const days = document.querySelector("#newDays").value;
+    const instructor = document.querySelector("#newInstructor").value;
+    const sectionNum = aCourse.sections.length + 1;
+    aCourse.sections.push({
+        sectionNum,
+        roomNum,
+        enrolled,
+        days,
+        instructor
+    });
+    newSectionForm.reset();
+    renderSections(aCourse.sections);
+});
