@@ -45,7 +45,7 @@ document.querySelector("#enrollStudent").addEventListener("click", function () {
 const newSectionForm = document.querySelector("#addSectionForm");
 newSectionForm.addEventListener("submit", function (event) {
     event.preventDefault();
-    const roomNum = document.querySelector("#newRoomNumber").value;  // fix: was querySelecctor + wrong var name
+    const roomNum = document.querySelector("#newRoomNumber").value;  
     const enrolled = document.querySelector("#newEnrollment").value;
     const days = document.querySelector("#newDays").value;
     const instructor = document.querySelector("#newInstructor").value;
