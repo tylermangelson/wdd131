@@ -4,67 +4,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>RecipeBook</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
 
-    <!-- Open Graph (Facebook, LinkedIn, etc.) -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Your Title">
-    <meta property="og:description" content="Your Description">
+    <meta property="og:title" content="RecipeBook">
+    <meta property="og:description" content="A collection of delicious recipes">
     <meta property="og:url" content="Your URL">
     <meta property="og:image" content="social-preview-image.png">
 
-    <!-- X Card -->
     <meta name="twitter:card" content="Social Preview Image">
-    <meta name="twitter:title" content="Your Title">
-    <meta name="twitter:description" content="Your Description">
+    <meta name="twitter:title" content="RecipeBook">
+    <meta name="twitter:description" content="A collection of delicious recipes">
     <meta name="twitter:image" content="social-preview-image.png">
 
-    <!-- Favicon -->
     <link rel="icon" href="/favicon.ico">
 
-    <!-- Apple Touch Icon -->
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 </head>
 
 <body>
 
-    <!-- title -->
     <div class="header">
         <img src="images/recipe-book.png" alt="">
         <p>RecipeBook</p>
     </div>
 
-    <!-- search -->
-    <form class="search-form" role="search">
-        <input type="search" placeholder="Find a recipe" aria-label="Find a recipe">
-        <button type="submit">
+    <form class="search-form" role="search" onsubmit="return false">
+        <input id="search" type="search" placeholder="Find a recipe" aria-label="Find a recipe">
+        <button type="button">
             <img src="images/search.svg" alt="Search">
         </button>
     </form>
 
-    <!-- content -->
-    <div class="recipe-card">
-        <img src="images/apple-crisp.jpg" alt="">
-        <div class="recipe-card-body">
-            <span class="recipe-tag">dessert</span>
-            <p class="recipe-title">Apple Crisp</p>
-            <span class="rating" role="img" aria-label="Rating: 4 out of 5 stars">⭐⭐⭐⭐☆</span>
-            <p>This apple crisp recipe is a simple yet delicious fall dessert that's great served warm with vanilla ice cream.</p>
-        </div>
-    </div>
+    <div id="recipe-container"></div>
 
     <div class="bottom-bar">
-    <footer>
-        <a href="https://www.flaticon.com/free-icons/recipe" title="recipe icons">Recipe icons created by Freepik - Flaticon</a>
-    </footer>
+        <footer>
+            <a href="https://www.flaticon.com/free-icons/recipe" title="recipe icons">Recipe icons created by Freepik - Flaticon</a>
+        </footer>
 
-    <div class="social">
-        <a href="#"><img src="images/instagram_icon.svg" alt="instagram icon"></a>
-        <a href="#"><img src="images/youtube_icon.svg" alt="youtube icon"></a>
-        <a href="#"><img src="images/pinterest_icon.svg" alt="pinterest icon"></a>
+        <div class="social">
+            <a href="#"><img src="images/instagram_icon.svg" alt="instagram icon"></a>
+            <a href="#"><img src="images/youtube_icon.svg" alt="youtube icon"></a>
+            <a href="#"><img src="images/pinterest_icon.svg" alt="pinterest icon"></a>
+        </div>
     </div>
-</div>
 
 </body>
 
