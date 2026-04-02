@@ -1,7 +1,7 @@
 /* HEADER */
 
 nav {
-    background-color: #228B22; /* Darker green for better contrast with white text */
+    background-color: #4EBF78;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -29,7 +29,7 @@ nav img {
 .hamburger span {
     width: 25px;
     height: 3px;
-    background-color: white;
+    background-color: white; /* Reverted to original */
     border-radius: 2px;
     transition: 0.3s;
 }
@@ -49,7 +49,7 @@ nav img {
 .nav-links {
     display: none;
     flex-direction: column;
-    background-color: #228B22; /* Match nav background */
+    background-color: #4EBF78;
     position: absolute;
     top: 100px;
     left: 0;
@@ -62,7 +62,7 @@ nav img {
 
 .nav-links a {
     text-decoration: none;
-    color: white;
+    color: white; /* Reverted to original */
     font-weight: bold;
     padding: 14px 20px;
     border-top: 1px solid rgba(255,255,255,0.2);
@@ -218,8 +218,9 @@ h1 {
 }
 
 .btn-primary {
-    background-color: #228B22; /* Darker green for better contrast */
-    color: white;
+    background-color: white;
+    color: #4EBF78;
+    border: 2px solid #4EBF78;
     padding: 12px 24px;
     border-radius: 6px;
     text-decoration: none;
@@ -228,13 +229,14 @@ h1 {
 }
 
 .btn-primary:hover {
-    background-color: #3aa864;
+    background-color: #4EBF78;
+    color: white;
 }
 
 .btn-secondary {
     background-color: white;
-    color: #228B22; /* Darker green text on white bg */
-    border: 2px solid #228B22;
+    color: #4EBF78; /* Reverted to original */
+    border: 2px solid #4EBF78;
     padding: 12px 24px;
     border-radius: 6px;
     text-decoration: none;
