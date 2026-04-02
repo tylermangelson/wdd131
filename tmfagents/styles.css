@@ -1,7 +1,7 @@
 /* HEADER */
 
 nav {
-    background-color: #4EBF78;
+    background-color: #228B22; /* Darker green for better contrast with white text */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -49,7 +49,7 @@ nav img {
 .nav-links {
     display: none;
     flex-direction: column;
-    background-color: #4EBF78;
+    background-color: #228B22; /* Match nav background */
     position: absolute;
     top: 100px;
     left: 0;
@@ -69,7 +69,7 @@ nav img {
 }
 
 .nav-links a:hover {
-    background-color: rgba(0,0,0,0.1);
+    background-color: rgba(255,255,255,0.1);
 }
 
 /* desktop */
@@ -82,13 +82,12 @@ nav img {
         display: flex;
         flex-direction: row;
         position: static;
-        width: auto;
         background: none;
+        width: auto;
     }
 
     .nav-links a {
-        border-top: none;
-        padding: 10px 15px;
+        border: none;
     }
 }
 
@@ -219,7 +218,7 @@ h1 {
 }
 
 .btn-primary {
-    background-color: #4EBF78;
+    background-color: #228B22; /* Darker green for better contrast */
     color: white;
     padding: 12px 24px;
     border-radius: 6px;
@@ -234,7 +233,8 @@ h1 {
 
 .btn-secondary {
     background-color: white;
-    color: #063B61;
+    color: #228B22; /* Darker green text on white bg */
+    border: 2px solid #228B22;
     padding: 12px 24px;
     border-radius: 6px;
     text-decoration: none;
