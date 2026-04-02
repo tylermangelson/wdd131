@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TMF Agents</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <img src="images/logos/tmfAgentsLogoNoBackground.png" alt="TMF Agents Logo">
+            <button class="hamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="agents.html">Agents</a>
+                <a href="request.html">Request</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Hire an AI Employee for Free</h1>
+            <p>Pre-made AI agents that turn any chatbot into a specialist. Just download and upload.</p>
+            <div class="hero-buttons">
+                <a href="agents.html" class="btn-primary">Browse Agents</a>
+                <a href="request.html" class="btn-secondary">Request One</a>
+            </div>
+        </section>
+
+        <!-- What is a TMF Agent -->
+        <section class="info-section">
+            <h2>What is a TMF Agent?</h2>
+            <p>A TMF (Task Markdown File) agent is a <strong>.md file</strong> of carefully written instructions that a chatbot follows to perform a specific task. Upload it to ChatGPT, Claude, or any AI chatbot and it instantly becomes a specialist — a researcher, a fact checker, a debate partner, and more.</p>
+        </section>
+
+        <!-- Feature Showcase -->
+        <section class="features">
+            <h2>What Can They Do?</h2>
+            <div class="showcase">
+                <button id="prev-btn" aria-label="Previous agent">&#8592;</button>
+                <div class="card" id="showcase-card">
+                    <img id="showcase-img" src="" alt="">
+                    <div class="card-body">
+                        <h3 id="showcase-name"></h3>
+                        <p id="showcase-desc"></p>
+                    </div>
+                </div>
+                <button id="next-btn" aria-label="Next agent">&#8594;</button>
+            </div>
+            <p class="showcase-counter"><span id="showcase-index">1</span> of <span id="showcase-total"></span></p>
+        </section>
+
+    </main>
+
+    <footer>&copy; 2026 TMF Agents - Tyler Mangelson</footer>
+
+    <script type="module" src="script.js"></script>
+</body>
+
+</html>

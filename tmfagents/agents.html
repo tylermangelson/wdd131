@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agents - TMF Agents</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <img src="images/logos/tmfAgentsLogoNoBackground.png" alt="TMF Agents Logo">
+            <button class="hamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="agents.html">Agents</a>
+                <a href="request.html">Request</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Our Agents</h1>
+        <p>Browse our library of pre-made AI agents. Download any file and upload it to your favorite chatbot to get started.</p>
+
+        <div class="search-bar">
+            <label for="search-input">Search:</label>
+            <input type="text" id="search-input" placeholder="Search agents...">
+            <span>Showing <strong id="agent-count">0</strong> agents</span>
+        </div>
+
+        <p id="no-results" style="display:none; color: red;">No agents match your search.</p>
+
+        <div class="grid" id="agent-grid">
+            <!-- Cards are injected by script.js -->
+        </div>
+    </main>
+
+    <footer>&copy; 2026 TMF Agents - Tyler Mangelson</footer>
+
+    <script type="module" src="script.js"></script>
+</body>
+
+</html>
