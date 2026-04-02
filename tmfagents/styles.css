@@ -245,7 +245,8 @@ h1 {
 }
 
 .btn-secondary:hover {
-    background-color: #e0e0e0;
+    background-color: #4EBF78;
+    color: white;
 }
 
 /* INFO SECTION */
