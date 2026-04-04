@@ -13,10 +13,10 @@
     <header>
         <nav>
             <img src="images/logos/tmfAgentsLogoNoBackground.png" alt="TMF Agents Logo">
-            <button class="hamburger" aria-label="Toggle menu">
+            <button class="menu-btn">
                 <span></span><span></span><span></span>
             </button>
-            <div class="nav-links">
+            <div class="menu">
                 <a href="index.html">Home</a>
                 <a href="agents.html">Agents</a>
                 <a href="request.html">Request</a>
@@ -26,44 +26,29 @@
 
     <main>
 
-        <!-- Hero Section -->
-        <section class="hero">
+        <section class="top-section">
             <h1>Hire an AI Employee for Free</h1>
             <p>Pre-made AI agents that turn any chatbot into a specialist. Just download and upload.</p>
-            <div class="hero-buttons">
-                <a href="agents.html" class="btn-primary">Browse Agents</a>
-                <a href="request.html" class="btn-secondary">Request One</a>
-            </div>
+            <a href="agents.html">Browse Agents</a>
+            <a href="request.html">Request One</a>
         </section>
 
-        <!-- What is a TMF Agent -->
-        <section class="info-section">
+        <section class="about">
             <h2>What is a TMF Agent?</h2>
             <p>A TMF (Task Markdown File) agent is a <strong>.md file</strong> of carefully written instructions that a chatbot follows to perform a specific task. Upload it to ChatGPT, Claude, or any AI chatbot and it instantly becomes a specialist — a researcher, a fact checker, a debate partner, and more.</p>
         </section>
 
-        <!-- Feature Showcase -->
-        <section class="features">
-            <h2>What Can They Do?</h2>
-            <div class="showcase">
-                <button id="prev-btn" aria-label="Previous agent">&#8592;</button>
-                <div class="card" id="showcase-card">
-                    <img id="showcase-img" src="" alt="">
-                    <div class="card-body">
-                        <h3 id="showcase-name"></h3>
-                        <p id="showcase-desc"></p>
-                    </div>
-                </div>
-                <button id="next-btn" aria-label="Next agent">&#8594;</button>
-            </div>
-            <p class="showcase-counter"><span id="showcase-index">1</span> of <span id="showcase-total"></span></p>
+        <section class="request-section">
+            <h2>Don't See What You Need?</h2>
+            <p>We'll build a custom agent for you. Just tell us what you want it to do.</p>
+            <a href="request.html">Request a Custom Agent</a>
         </section>
 
     </main>
 
     <footer>&copy; 2026 TMF Agents - Tyler Mangelson</footer>
 
-    <script type="module" src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>

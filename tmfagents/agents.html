@@ -13,10 +13,10 @@
     <header>
         <nav>
             <img src="images/logos/tmfAgentsLogoNoBackground.png" alt="TMF Agents Logo">
-            <button class="hamburger" aria-label="Toggle menu">
+            <button class="menu-btn">
                 <span></span><span></span><span></span>
             </button>
-            <div class="nav-links">
+            <div class="menu">
                 <a href="index.html">Home</a>
                 <a href="agents.html">Agents</a>
                 <a href="request.html">Request</a>
@@ -28,22 +28,21 @@
         <h1>Our Agents</h1>
         <p>Browse our library of pre-made AI agents. Download any file and upload it to your favorite chatbot to get started.</p>
 
-        <div class="search-bar">
-            <label for="search-input">Search:</label>
-            <input type="text" id="search-input" placeholder="Search agents...">
-            <span>Showing <strong id="agent-count">0</strong> agents</span>
+        <div class="search">
+            <label for="searchInput">Search: </label>
+            <input type="text" id="searchInput" placeholder="Search agents...">
+            <span>Showing <strong id="count">0</strong> agents</span>
         </div>
 
-        <p id="no-results" style="display:none; color: red;">No agents match your search.</p>
+        <p id="noResults" class="hide" style="color: red;">No agents found.</p>
 
-        <div class="grid" id="agent-grid">
-            <!-- Cards are injected by script.js -->
-        </div>
+        <div class="cards" id="cardGrid"></div>
     </main>
 
     <footer>&copy; 2026 TMF Agents - Tyler Mangelson</footer>
 
-    <script type="module" src="script.js"></script>
+    <script src="agents-data.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
