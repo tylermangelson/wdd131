@@ -1,7 +1,7 @@
 let btn = document.querySelector('.menu-btn');
 let menu = document.querySelector('.menu');
 
-btn.addEventListener('click', function() {
+btn.addEventListener('click', function () {
     btn.classList.toggle('active');
     menu.classList.toggle('active');
 });
@@ -43,7 +43,7 @@ function showAgents(list) {
 if (cardGrid) {
     showAgents(agents);
 
-    searchInput.addEventListener('input', function() {
+    searchInput.addEventListener('input', function () {
         let searchTerm = searchInput.value.toLowerCase();
         let results = [];
 
